@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarto Poder News - Categorias</title>
+    <meta name="description" content="Explore todas as categorias de notícias do Quarto Poder News">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e variáveis - COM FONTES DA TODAS-NOTICIAS */
+        :root {
+            --primary: #0A0A0A;
+            --secondary: #D50000;
+            --accent: #003366;
+            --light: #FFFFFF;
+            --gray-light: #F8F9FA;
+            --gray: #6C757D;
+            --gray-dark: #212529;
+            --transition: all 0.3s ease;
+            --border: 1px solid #E9ECEF;
+            --shadow: 0 5px 15px rgba(0,0,0,0.05);
+            --shadow-hover: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Top Bar - Estilo IGUAL AO INDEX.HTML */
+        .top-bar {
+            background: #111;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            border-bottom: none;
+        }
+
+        .top-bar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 38px;
+            gap: 12px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar .date {
+            font-weight: 500;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .social-icons a {
+            width: auto;
+            height: auto;
+            border-radius: 0;
+            background: transparent;
+            color: #fff;
+            opacity: 0.85;
+            transition: opacity .2s ease, transform .2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .top-bar-content {
+                flex-direction: column;
+                gap: 6px;
+                padding: 6px 0;
+                text-align: center;
+            }
+        }
+
+        /* Header Principal */
+        .main-header {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #eaeaea;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo COM FONTES DA TODAS-NOTICIAS */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        .logo-icon .number {
+            color: var(--secondary);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            color: var(--primary);
+            line-height: 1;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo-text .tagline {
+            font-size: 11px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        /* MENU HAMBURGUER IGUAL TRIBUNALIVREGOIAS.COM.BR */
+        .hamburger-menu {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Botão Hamburger - Estilo exato do site */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            padding: 0;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* Animação do botão quando aberto */
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Menu Lateral - Estilo idêntico ao Tribuna Livre */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .menu-sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 320px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .menu-sidebar.active {
+            right: 0;
+        }
+
+        /* Header do Menu Mobile */
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .menu-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        .menu-logo-text h3 {
+            font-size: 16px;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.2;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .menu-logo-text .sub {
+            font-size: 10px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 20px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
+            background: #f5f5f5;
+            color: var(--primary);
+        }
+
+        /* Categorias do Menu - Estilo igual ao site */
+        .menu-categories {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .menu-categories li {
+            margin-bottom: 2px;
+        }
+
+        .menu-categories a {
+            display: block;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .menu-categories a:hover {
+            background: #f8f9fa;
+            color: var(--secondary);
+            padding-left: 20px;
+        }
+
+        .menu-categories a.active {
+            background: #f8f9fa;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .menu-categories a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary);
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* Destaques do Menu */
+        .menu-highlights {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .menu-highlights h4 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .highlight-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .highlight-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .highlight-item a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 1.4;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .highlight-item a:hover {
+            color: var(--secondary);
+        }
+
+        .highlight-date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 999px;
+        }
+
+        .page-description {
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 25px auto 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Grid de Categorias */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .category-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
+        }
+
+        .category-icon {
+            font-size: 36px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .category-card p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: .9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ============================================
+           FOOTER IDENTICO AO TODAS-NOTICIAS.HTML
+           ============================================ */
+        footer {
+            background: var(--primary);
+            color: var(--light);
+            padding: 44px 0 22px;
+            margin-top: 46px;
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--secondary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            margin-bottom: 28px;
+        }
+
+        .footer-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 14px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.45rem;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-logo p {
+            color: var(--gray);
+            font-size: .92rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+            position: relative;
+            padding-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section h4::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 42px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(6px);
+        }
+
+        .newsletter-form {
+            margin-top: 12px;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.25);
+            color: var(--light);
+            font-size: .95rem;
+            transition: var(--transition);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255,255,255,.14);
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--secondary);
+            color: var(--light);
+            font-weight: 900;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #b30000;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,.1);
+            padding-top: 18px;
+            color: var(--gray);
+            font-size: .9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav a {
+            color: var(--gray);
+            transition: var(--transition);
+            font-size: .85rem;
+            text-decoration: none;
+        }
+
+        .footer-nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Newsletter Message */
+        .newsletter-message {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .newsletter-message.success {
+            background: rgba(25,135,84,0.1);
+            color: #198754;
+            border: 1px solid rgba(25,135,84,0.2);
+        }
+
+        .newsletter-message.error {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
+        /* ============================================
+           HOTSPOT PARA EQUIPE (DO TODAS-NOTICIAS)
+           ============================================ */
+        #qpn-staff-hotspot {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 56px;
+            height: 56px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(213,0,0,0.4);
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+
+        #qpn-staff-hotspot:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (min-width: 768px) {
+            .logo-text h1 {
+                font-size: 28px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-content {
+                padding: 0 15px;
+            }
+            
+            .menu-sidebar {
+                width: 280px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+                padding: 0 15px;
+            }
+            
+            .copyright {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .logo-text h1 {
+                font-size: 20px;
+            }
+            
+            .menu-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar PADRÃO IGUAL AO INDEX -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-left">
+                    <span class="date" id="currentDate"></span>
+                </div>
+                <div class="top-bar-right">
+                    <div class="social-icons">
+                        <a href="https://web.facebook.com/profile.php?id=61587173375119&sk=about" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    
+                        <a href="https://www.instagram.com/oquartopodernews/" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container header-content">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><span class="number">4</span></div>
+                <div class="logo-text">
+                    <h1>QUARTO PODER NEWS</h1>
+                    <div class="tagline">O JORNAL QUE FAZ A DIFERENÇA</div>
+                </div>
+            </a>
+
+            <!-- Menu Hamburguer -->
+            <div class="hamburger-menu">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay do Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Menu Lateral -->
+    <div class="menu-sidebar" id="menuSidebar">
+        <div class="menu-header">
+            <div class="menu-logo">
+                <div class="menu-logo-icon"><span class="number">4</span></div>
+                <div class="menu-logo-text">
+                    <h3>QUARTO PODER NEWS</h3>
+                    <div class="sub">Menu Principal</div>
+                </div>
+            </div>
+            <button class="close-menu-btn" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Categorias do Menu -->
+        <ul class="menu-categories">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categorias.html" class="active">Categorias</a></li>
+            <li><a href="politica.html">Política</a></li>
+            <li><a href="economia.html">Economia</a></li>
+            <li><a href="esportes.html">Esportes</a></li>
+            <li><a href="cultura.html">Cultura</a></li>
+            <li><a href="tecnologia.html">Tecnologia</a></li>
+            <li><a href="saude.html">Saúde</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="contato.html">Contato</a></li>
+        </ul>
+
+        <!-- Destaques -->
+        <div class="menu-highlights">
+            <h4>Destaques</h4>
+            <div class="highlight-item">
+                <a href="#">Caiado se filia ao PSD e entra no tabuleiro presidencial de 2026</a>
+                <div class="highlight-date">28/01/2026</div>
+            </div>
+            <div class="highlight-item">
+                <a href="#">O fim do mito do nômade digital: economia por trás do declínio</a>
+                <div class="highlight-date">24/01/2026</div>
+            </div>
+            <div class="highlight-item">
+                <a href="#">Nikolas Ferreira consolida liderança conservadora</a>
+                <div class="highlight-date">22/01/2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Categorias</h1>
+            <p class="page-description">Explore todas as editorias do Quarto Poder News. Clique em uma categoria para ver as últimas notícias.</p>
+            
+            <div class="categories-grid">
+                <a href="todas-noticias.html?categoria=Política" class="category-card">
+                    <div class="category-icon"><i class="fas fa-landmark"></i></div>
+                    <h3>Política</h3>
+                    <p>Notícias sobre governo, eleições, políticas públicas e cenário político nacional e internacional.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Economia" class="category-card">
+                    <div class="category-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Economia</h3>
+                    <p>Mercado financeiro, investimentos, indicadores econômicos e análises do cenário econômico.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Esportes" class="category-card">
+                    <div class="category-icon"><i class="fas fa-futbol"></i></div>
+                    <h3>Esportes</h3>
+                    <p>Futebol, basquete, vôlei, Olimpíadas e todas as modalidades esportivas.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Cultura" class="category-card">
+                    <div class="category-icon"><i class="fas fa-theater-masks"></i></div>
+                    <h3>Cultura</h3>
+                    <p>Cinema, música, teatro, literatura e todas as expressões artísticas e culturais.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Tecnologia" class="category-card">
+                    <div class="category-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Tecnologia</h3>
+                    <p>Inovações tecnológicas, startups, inteligência artificial e o mundo digital em transformação.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Saúde" class="category-card">
+                    <div class="category-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>Saúde</h3>
+                    <p>Medicina, bem-estar, pesquisas científicas e políticas públicas de saúde.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Educação" class="category-card">
+                    <div class="category-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Educação</h3>
+                    <p>Ensino, pesquisas acadêmicas, políticas educacionais e inovações pedagógicas.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html?categoria=Internacional" class="category-card">
+                    <div class="category-icon"><i class="fas fa-globe-americas"></i></div>
+                    <h3>Internacional</h3>
+                    <p>Relações internacionais, geopolítica, conflitos e acontecimentos globais.</p>
+                    <div class="read-more">Ver Notícias <i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="todas-noticias.html" class="category-card">
+                    <div class="category-icon"><i class="fas fa-newspaper"></i></div>
+                    <h3>Todas as Notícias</h3>
+                    <p>Acesse nosso acervo completo com todas as notícias publicadas no Quarto Poder News.</p>
+                    <div class="read-more">Explorar Todas <i class="fas fa-arrow-right"></i></div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer IDENTICO AO TODAS-NOTICIAS.HTML -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon"><span class="number">4</span></div>
+                    <h3>QUARTO PODER NEWS</h3>
+                    <p>Jornalismo independente com compromisso com a verdade, integridade e impacto.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Editorias</h4>
+                    <ul class="footer-links">
+                        <li><a href="todas-noticias.html?categoria=Política">Política</a></li>
+                        <li><a href="todas-noticias.html?categoria=Economia">Economia</a></li>
+                        <li><a href="todas-noticias.html?categoria=Esportes">Esportes</a></li>
+                        <li><a href="todas-noticias.html?categoria=Cultura">Cultura</a></li>
+                        <li><a href="todas-noticias.html?categoria=Tecnologia">Tecnologia</a></li>
+                        <li><a href="todas-noticias.html?categoria=Saúde">Saúde</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Institucional</h4>
+                    <ul class="footer-links">
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                       
+                        <li><a href="categorias.html">Categorias</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Inscreva-se</h4>
+                    <p>As principais notícias do dia, direto da redação do Quarto Poder News.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required />
+                        <button type="submit">INSCREVER</button>
+                    </form>
+                    <div class="newsletter-message" id="newsletterMessage"></div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 1995-2026 Quarto Poder News. Todos os direitos reservados.</p>
+                <div class="footer-nav">
+                    <a href="termos.html">Termos de Uso</a>
+                    <a href="privacidade.html">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Hotspot da Equipe -->
+    <div id="qpn-staff-hotspot" title="Acesso equipe" aria-label="Acesso equipe">
+        <i class="fas fa-user-shield"></i>
+    </div>
+
+    <script>
+        // ==================== API HELPER (igual ao index.html) ====================
+        async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
+            const res = await fetch(path, {
+                method,
+                credentials, // use "include" se estiver em domínio/porta diferente
+                headers: { "Content-Type": "application/json", ...headers },
+                body: body ? JSON.stringify(body) : undefined,
+            });
+
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data?.error || `Erro HTTP ${res.status}`);
+            return data;
+        }
+
+        // Público (igual ao index.html)
+        const Public = {
+            noticias: (params = "") => api(`/api/public/noticias${params}`),
+            destaques: () => api("/api/public/destaques"),
+            categorias: () => api("/api/public/categorias"),
+        };
+
+        // Auth (igual ao index.html)
+        const Auth = {
+            session: () => api("/api/check-session"),
+        };
+
+        // ==================== FUNÇÕES BÁSICAS ====================
+        function updateDateTime() {
+            const now = new Date();
+            const dateEl = document.getElementById('currentDate');
+            if (dateEl) {
+                const options = { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                };
+                dateEl.textContent = now.toLocaleDateString('pt-BR', options);
+            }
+        }
+
+        // ==================== CONTROLE DO MENU ====================
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuSidebar = document.getElementById('menuSidebar');
+
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.add('active');
+                menuOverlay?.classList.add('active');
+                menuSidebar?.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        function closeMenu() {
+            hamburgerBtn?.classList.remove('active');
+            menuOverlay?.classList.remove('active');
+            menuSidebar?.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeMenuBtn?.addEventListener('click', closeMenu);
+        menuOverlay?.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // ==================== NEWSLETTER (API REAL - envia email Gmail) ====================
+        function initNewsletter() {
+            const newsletterForm = document.getElementById('newsletterForm');
+            const newsletterMessage = document.getElementById('newsletterMessage');
+            if (!newsletterForm || !newsletterMessage) return;
+
+            newsletterForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = (emailInput?.value || '').trim();
+
+                const showMessage = (text, type = 'success') => {
+                    newsletterMessage.textContent = text;
+                    newsletterMessage.className = `newsletter-message ${type}`;
+                    newsletterMessage.style.display = 'block';
+                    if (type === 'success') setTimeout(() => (newsletterMessage.style.display = 'none'), 5000);
+                };
+
+                if (!email || !email.includes('@')) {
+                    showMessage('Por favor, insira um e-mail válido.', 'error');
+                    return;
+                }
+
+                showMessage('Processando inscrição...', '');
+
+                try {
+                    const result = await api('/api/newsletter/inscrever', { 
+                        method: 'POST', 
+                        body: { email } 
+                    });
+
+                    if (result?.success) {
+                        // O backend já retorna mensagens claras (inclui caso SMTP falhe)
+                        showMessage(result.message || '✅ Inscrição realizada! Verifique seu email para confirmar.', 'success');
+                        newsletterForm.reset();
+                    } else {
+                        showMessage(result?.error || 'Erro ao processar inscrição.', 'error');
+                    }
+                } catch (err) {
+                    console.error('Newsletter erro:', err);
+                    showMessage('Erro ao enviar. Verifique se o servidor Flask está rodando e o Gmail (SMTP) está configurado.', 'error');
+                }
+            });
+        }
+
+        // ==================== HOTSPOT DA EQUIPE ====================
+        async function initStaffHotspot() {
+            const hotspot = document.getElementById('qpn-staff-hotspot');
+            if (!hotspot) return;
+
+            hotspot.style.display = 'none';
+
+            try {
+                const session = await Auth.session();
+                if (session?.authenticated) {
+                    hotspot.style.display = 'flex';
+                    hotspot.title = `Acesso: ${session?.user?.nome || 'Equipe'}`;
+                }
+            } catch {
+                hotspot.style.display = 'none';
+            }
+
+            hotspot.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data e hora
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
+            
+            // Garantir que o menu comece fechado
+            closeMenu();
+            
+            // Newsletter
+            initNewsletter();
+            
+            // Hotspot da equipe
+            initStaffHotspot();
+        });
+
+        // ==================== RESPONSIVIDADE ====================
+        window.addEventListener('resize', () => {
+            // Se redimensionar para desktop (>768px), fechar menu
+            if (window.innerWidth > 768 && menuSidebar?.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+    </script>
+</body>
+</html>

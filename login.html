@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarto Poder News - Área do Jornal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" />
+    <style>
+
+    :root{
+        --primary:#0A0A0A;
+        --secondary:#D50000;
+        --accent:#003366;
+        --light:#FFFFFF;
+        --gray-light:#F6F7F9;
+        --gray:#6C757D;
+        --gray-dark:#212529;
+        --border:1px solid rgba(255,255,255,.12);
+        --shadow:0 24px 80px rgba(0,0,0,.45);
+        --shadow-soft:0 16px 50px rgba(0,0,0,.22);
+        --transition:all .28s cubic-bezier(.2,.9,.2,1);
+        --radius:22px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+        font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:18px;
+        color:rgba(255,255,255,.92);
+        background:
+          radial-gradient(1100px 650px at 10% 15%, rgba(213,0,0,.24), transparent 58%),
+          radial-gradient(900px 520px at 92% 22%, rgba(0,51,102,.28), transparent 60%),
+          radial-gradient(700px 420px at 65% 92%, rgba(255,255,255,.08), transparent 60%),
+          linear-gradient(180deg, #070a0f 0%, #0c121b 45%, #0a0f16 100%);
+        overflow-x:hidden;
+    }
+
+    /* Background decor */
+    .bg-decor{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        z-index:1;
+        pointer-events:none
+    }
+    .blob{
+        position:absolute;
+        border-radius:50%;
+        filter:blur(60px);
+        opacity:.15
+    }
+    .blob-1{
+        width:600px;
+        height:600px;
+        background:var(--secondary);
+        top:-200px;
+        left:-200px
+    }
+    .blob-2{
+        width:500px;
+        height:500px;
+        background:var(--accent);
+        bottom:-150px;
+        right:-150px
+    }
+    .blob-3{
+        width:300px;
+        height:300px;
+        background:var(--light);
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%)
+    }
+    .grid{
+        position:absolute;
+        width:100%;
+        height:100%;
+        background-image:
+            linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+        background-size:50px 50px
+    }
+
+    /* Top actions */
+    .top-actions{
+        position:absolute;
+        top:20px;
+        left:20px;
+        right:20px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        z-index:100
+    }
+    .back-link{
+        color:var(--light);
+        text-decoration:none;
+        font-size:.9rem;
+        font-weight:500;
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:10px 16px;
+        background:rgba(0,0,0,.3);
+        border-radius:12px;
+        border:1px solid rgba(255,255,255,.1);
+        transition:var(--transition)
+    }
+    .back-link:hover{
+        background:rgba(0,0,0,.5);
+        transform:translateY(-2px)
+    }
+    .brand-chip{
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+        padding:10px 18px;
+        background:rgba(0,0,0,.5);
+        border-radius:20px;
+        border:1px solid rgba(255,255,255,.1);
+        backdrop-filter:blur(10px)
+    }
+    .chip-icon{
+        width:30px;
+        height:30px;
+        background:var(--secondary);
+        border-radius:8px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:900;
+        color:var(--light)
+    }
+    .chip-text{
+        font-weight:600;
+        font-size:.9rem
+    }
+
+    /* Login stage */
+    .login-stage{
+        width:100%;
+        max-width:480px;
+        position:relative;
+        z-index:10
+    }
+    .login-container{
+        background:rgba(15,18,25,.85);
+        backdrop-filter:blur(20px);
+        -webkit-backdrop-filter:blur(20px);
+        border-radius:var(--radius);
+        border:var(--border);
+        box-shadow:var(--shadow);
+        overflow:hidden;
+        transition:var(--transition);
+        position:relative
+    }
+
+    /* Login header */
+    .login-header{
+        padding:32px 32px 0
+    }
+    .header-badge{
+        display:inline-block;
+        background:var(--secondary);
+        color:var(--light);
+        padding:6px 16px;
+        border-radius:20px;
+        font-size:.75rem;
+        font-weight:600;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        margin-bottom:24px
+    }
+    .login-logo{
+        display:flex;
+        align-items:center;
+        gap:16px;
+        margin-bottom:32px
+    }
+    .login-logo-icon{
+        width:64px;
+        height:64px;
+        background:var(--secondary);
+        border-radius:16px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:relative;
+        overflow:hidden
+    }
+    .login-logo-icon:before{
+        content:'';
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        height:50%;
+        background:linear-gradient(180deg, rgba(255,255,255,.2), transparent)
+    }
+    .login-logo-icon .number{
+        font-family:'Playfair Display', serif;
+        font-size:2.5rem;
+        font-weight:900;
+        color:var(--light);
+        line-height:1
+    }
+    .login-logo-text h1{
+        font-family:'Playfair Display', serif;
+        font-size:2rem;
+        font-weight:900;
+        color:var(--light);
+        line-height:1.1;
+        margin-bottom:4px
+    }
+    .login-logo-text p{
+        color:var(--gray);
+        font-size:.9rem
+    }
+
+    /* Login body */
+    .login-body{
+        padding:0 32px 32px
+    }
+    .login-title{
+        font-size:1.8rem;
+        font-weight:700;
+        color:var(--light);
+        margin-bottom:8px
+    }
+    .login-subtitle{
+        color:var(--gray);
+        font-size:1rem;
+        margin-bottom:32px
+    }
+
+    /* Demo credentials */
+    .demo-credentials{
+        background:rgba(0,51,102,.2);
+        border-radius:12px;
+        margin-bottom:32px;
+        border:1px solid rgba(0,51,102,.3);
+        overflow:hidden
+    }
+    .demo-summary{
+        padding:16px;
+        background:none;
+        border:none;
+        color:var(--light);
+        font-weight:500;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        width:100%;
+        text-align:left;
+        font-size:.95rem
+    }
+    .demo-summary:focus{
+        outline:none
+    }
+    .demo-body{
+        padding:0 16px 16px;
+        border-top:1px solid rgba(255,255,255,.1)
+    }
+    .demo-title{
+        padding:16px 0;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        color:var(--light);
+        font-weight:600;
+        font-size:.9rem
+    }
+    .demo-item{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-bottom:12px;
+        padding:12px;
+        background:rgba(0,0,0,.3);
+        border-radius:8px
+    }
+    .demo-label{
+        font-weight:600;
+        color:var(--gray);
+        min-width:70px;
+        font-size:.85rem
+    }
+    .demo-value{
+        flex:1;
+        color:var(--light);
+        font-family:monospace;
+        font-size:.9rem;
+        word-break:break-all
+    }
+    .demo-copy{
+        background:rgba(255,255,255,.1);
+        border:none;
+        color:var(--light);
+        padding:6px 12px;
+        border-radius:6px;
+        cursor:pointer;
+        transition:var(--transition);
+        font-size:.8rem;
+        display:flex;
+        align-items:center;
+        gap:5px
+    }
+    .demo-copy:hover{
+        background:var(--accent)
+    }
+
+    /* Message */
+    .message{
+        padding:16px;
+        border-radius:12px;
+        margin-bottom:24px;
+        display:none;
+        animation:fadeIn .3s ease;
+        font-size:.95rem
+    }
+    .message.success{
+        background:rgba(46,204,113,.2);
+        color:#2ecc71;
+        border:1px solid rgba(46,204,113,.3)
+    }
+    .message.error{
+        background:rgba(231,76,60,.2);
+        color:#e74c3c;
+        border:1px solid rgba(231,76,60,.3)
+    }
+    .message.info{
+        background:rgba(52,152,219,.2);
+        color:#3498db;
+        border:1px solid rgba(52,152,219,.3)
+    }
+    @keyframes fadeIn{
+        from{opacity:0;transform:translateY(-10px)}
+        to{opacity:1;transform:translateY(0)}
+    }
+
+    /* Form */
+    .form-group{
+        margin-bottom:24px
+    }
+    .form-label{
+        display:block;
+        color:var(--light);
+        margin-bottom:8px;
+        font-weight:500;
+        font-size:.95rem;
+        display:flex;
+        align-items:center;
+        gap:8px
+    }
+    .input-with-icon{
+        position:relative;
+        display:flex;
+        align-items:center
+    }
+    .input-with-icon i:first-child{
+        position:absolute;
+        left:16px;
+        color:var(--gray);
+        font-size:1.1rem
+    }
+    .form-input{
+        width:100%;
+        padding:16px 16px 16px 48px;
+        background:rgba(255,255,255,.05);
+        border:1px solid rgba(255,255,255,.1);
+        border-radius:12px;
+        color:var(--light);
+        font-size:1rem;
+        transition:var(--transition);
+        font-family:'Inter', sans-serif
+    }
+    .form-input:focus{
+        outline:none;
+        border-color:var(--secondary);
+        background:rgba(255,255,255,.08);
+        box-shadow:0 0 0 3px rgba(213,0,0,.15)
+    }
+    .form-input::placeholder{
+        color:var(--gray)
+    }
+    .toggle-pass{
+        position:absolute;
+        right:16px;
+        background:none;
+        border:none;
+        color:var(--gray);
+        cursor:pointer;
+        font-size:1.1rem;
+        padding:4px;
+        transition:var(--transition)
+    }
+    .toggle-pass:hover{
+        color:var(--light)
+    }
+
+    /* Login button */
+    .login-btn{
+        width:100%;
+        padding:18px;
+        background:linear-gradient(135deg, var(--secondary), #ff3333);
+        color:var(--light);
+        border:none;
+        border-radius:12px;
+        font-size:1.1rem;
+        font-weight:600;
+        cursor:pointer;
+        transition:var(--transition);
+        margin-top:32px;
+        position:relative;
+        overflow:hidden;
+        --rx:50%;
+        --ry:50%
+    }
+    .login-btn:before{
+        content:'';
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        background:radial-gradient(600px circle at var(--rx) var(--ry), rgba(255,255,255,.1), transparent 40%);
+        opacity:0;
+        transition:opacity .3s ease
+    }
+    .login-btn:hover:before{
+        opacity:1
+    }
+    .login-btn:hover{
+        transform:translateY(-3px);
+        box-shadow:0 10px 30px rgba(213,0,0,.3)
+    }
+    .login-btn:disabled{
+        opacity:.6;
+        cursor:not-allowed;
+        transform:none!important
+    }
+    .login-btn i{
+        margin-right:10px
+    }
+
+    /* Login footer */
+    .login-footer{
+        text-align:center;
+        margin-top:32px;
+        color:var(--gray);
+        font-size:.9rem;
+        line-height:1.6
+    }
+    .login-footer a{
+        color:var(--secondary);
+        text-decoration:none;
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        margin-top:8px;
+        transition:var(--transition)
+    }
+    .login-footer a:hover{
+        color:var(--light)
+    }
+
+    /* Copyright */
+    .copyright{
+        position:absolute;
+        bottom:20px;
+        text-align:center;
+        width:100%;
+        color:var(--gray);
+        font-size:.85rem;
+        z-index:10
+    }
+
+    /* Animations */
+    @keyframes shake{
+        0%,100%{transform:translateX(0)}
+        10%,30%,50%,70%,90%{transform:translateX(-5px)}
+        20%,40%,60%,80%{transform:translateX(5px)}
+    }
+    @keyframes pulse{
+        0%{box-shadow:0 0 0 3px rgba(213,0,0,.15)}
+        50%{box-shadow:0 0 0 5px rgba(213,0,0,.1)}
+        100%{box-shadow:0 0 0 3px rgba(213,0,0,.15)}
+    }
+
+    /* Responsive */
+    @media (max-width:768px){
+        .top-actions{
+            flex-direction:column;
+            gap:15px;
+            align-items:flex-start
+        }
+        .login-header,
+        .login-body{
+            padding:24px
+        }
+        .login-logo{
+            flex-direction:column;
+            text-align:center;
+            gap:12px
+        }
+        .login-logo-text h1{
+            font-size:1.8rem
+        }
+    }
+    @media (max-width:480px){
+        body{
+            padding:12px
+        }
+        .login-container{
+            border-radius:16px
+        }
+        .login-header,
+        .login-body{
+            padding:20px
+        }
+    }
+    
+
+/* =========================
+   RESPONSIVIDADE (100%)
+   ========================= */
+:root{
+  --container: 1200px;
+}
+html{ -webkit-text-size-adjust:100%; }
+body{ min-width:0; }
+img, video{ max-width:100%; height:auto; }
+.container{ max-width: var(--container); margin:0 auto; padding: 0 clamp(12px, 3vw, 20px); }
+.grid-auto{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.flex-wrap{ display:flex; flex-wrap:wrap; gap:12px; }
+button, input, select, textarea{ max-width:100%; }
+.card{ min-width:0; }
+
+/* Tabelas: rolagem horizontal + modo "cards" em telas pequenas */
+.table-wrap{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:12px; }
+.table-wrap table{ min-width: 760px; width:100%; border-collapse: collapse; }
+@media (max-width: 780px){
+  .table-wrap table{ min-width: 0; }
+  table.responsive-stack thead{ display:none; }
+  table.responsive-stack, table.responsive-stack tbody, table.responsive-stack tr, table.responsive-stack td{
+    display:block; width:100%;
+  }
+  table.responsive-stack tr{
+    background:#fff;
+    border:1px solid rgba(0,0,0,.08);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  }
+  table.responsive-stack td{
+    border:none !important;
+    padding:8px 0 !important;
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+    align-items:flex-start;
+  }
+  table.responsive-stack td::before{
+    content: attr(data-label);
+    font-weight:800;
+    color: rgba(0,0,0,.65);
+    padding-right:10px;
+    flex: 0 0 42%;
+    text-align:left;
+  }
+  table.responsive-stack td > *{ flex: 1 1 auto; }
+}
+
+/* Formulários: 2 colunas no desktop, 1 no mobile */
+.form-grid{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 780px){ .form-grid{ grid-template-columns: 1fr; } }
+
+/* Barras (top/header) não estouram */
+.header-content{ flex-wrap:wrap; gap: 12px; }
+
+
+</style>
+</head>
+<body>
+    <div class="bg-decor" aria-hidden="true">
+        <span class="blob blob-1"></span>
+        <span class="blob blob-2"></span>
+        <span class="blob blob-3"></span>
+        <span class="grid"></span>
+    </div>
+
+    <!-- Topo -->
+    <div class="top-actions">
+        <a class="back-link" href="index.html" aria-label="Voltar ao site principal">
+            <i class="fas fa-arrow-left"></i> Voltar ao site
+        </a>
+        <div class="brand-chip" aria-label="Quarto Poder News">
+            <span class="chip-icon"><span class="number">4</span></span>
+            <span class="chip-text">Quarto Poder News</span>
+        </div>
+    </div>
+
+    <main class="login-stage">
+        <!-- Container de Login -->
+        <div class="login-container">
+        <div class="login-header">
+            <div class="header-badge">SISTEMA</div>
+            <div class="login-logo">
+                <div class="login-logo-icon">
+                    <span class="number">4</span>
+                </div>
+                <div class="login-logo-text">
+                    <h1>QUARTO PODER</h1>
+                    <p>Área administrativa do jornal</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-body">
+            <h2 class="login-title">Acesso Restrito</h2>
+            <p class="login-subtitle">Digite seu e-mail e senha para acessar o sistema</p>
+            
+          
+
+            <div id="message" class="message"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i> E-mail
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" class="form-input" id="email" 
+                               placeholder="seu.email@quartopodernews.com" 
+                               required 
+                               autocomplete="email">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i> Senha
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-key"></i>
+                        <input type="password" class="form-input" id="senha" 
+                               placeholder="Digite sua senha" 
+                               required 
+                               autocomplete="current-password">
+                        <button type="button" class="toggle-pass" id="toggleSenha" aria-label="Mostrar/ocultar senha">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span id="btnText">
+                        <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
+                    </span>
+                    <span id="btnLoading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Processando...
+                    </span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Acesso restrito à equipe editorial do jornal</p>
+                <p>
+                   
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        Quarto Poder News © 2024-2026
+    </div>
+    
+    <script>
+// ============ API HELPER ============
+        async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
+            const res = await fetch(path, {
+                method,
+                credentials,
+                headers: { "Content-Type": "application/json", ...headers },
+                body: body ? JSON.stringify(body) : undefined,
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data?.error || data?.message || `Erro HTTP ${res.status}`);
+            return data;
+        }
+
+        // Elementos DOM
+        const loginForm = document.getElementById('loginForm');
+        const messageDiv = document.getElementById('message');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+        const toggleSenha = document.getElementById('toggleSenha');
+        const emailInput = document.getElementById('email');
+        const senhaInput = document.getElementById('senha');
+
+        // Toggle de senha
+        toggleSenha?.addEventListener('click', () => {
+            const icon = toggleSenha.querySelector('i');
+            if (!senhaInput || !icon) return;
+            const isPass = senhaInput.getAttribute('type') === 'password';
+            senhaInput.setAttribute('type', isPass ? 'text' : 'password');
+            icon.className = isPass ? 'fas fa-eye-slash' : 'fas fa-eye';
+            senhaInput.focus();
+        });
+
+        // Mensagens
+        function showMessage(text, type) {
+            const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle';
+            messageDiv.innerHTML = `<i class="fas fa-${icon}"></i> ${text}`;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => { messageDiv.style.display = 'none'; }, 3000);
+            }
+        }
+
+        // Efeito de luz no botão (segue o mouse)
+        loginBtn?.addEventListener('pointermove', (e) => {
+            const r = loginBtn.getBoundingClientRect();
+            const x = ((e.clientX - r.left) / r.width) * 100;
+            const y = ((e.clientY - r.top) / r.height) * 100;
+            loginBtn.style.setProperty('--rx', `${x}%`);
+            loginBtn.style.setProperty('--ry', `${y}%`);
+        });
+
+        // Se já estiver logado (sessão no servidor), redireciona
+        async function checkSession() {
+            try {
+                const s = await api('/api/check-session');
+                if (s?.authenticated) {
+                    showMessage(`Você já está logado como ${s.user?.nome || 'usuário'}. Redirecionando...`, 'success');
+                    setTimeout(() => { window.location.href = 'admin.html'; }, 700);
+                    return true;
+                }
+            } catch (_) {}
+            return false;
+        }
+
+        // Login via API
+        loginForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = (emailInput?.value || '').trim().toLowerCase();
+            const senha = senhaInput?.value || '';
+
+            if (!email || !senha) {
+                showMessage('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+
+            // Loading
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            loginBtn.disabled = true;
+
+            try {
+                const result = await api('/api/login', { method: 'POST', body: { email, senha } });
+                if (result?.success) {
+                    // salvar último email (opcional)
+                    try { localStorage.setItem('last_email', email); } catch (_) {}
+
+                    showMessage(`Bem-vindo, ${result.user?.nome || 'usuário'}!`, 'success');
+                    setTimeout(() => { window.location.href = 'admin.html'; }, 900);
+                } else {
+                    showMessage(result?.error || 'Credenciais inválidas.', 'error');
+                }
+            } catch (err) {
+                showMessage(err.message || 'Erro ao processar login.', 'error');
+            } finally {
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                loginBtn.disabled = false;
+            }
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async () => {
+            await checkSession();
+
+            // Auto-preenchimento de email salvo
+            try {
+                const savedEmail = localStorage.getItem('last_email');
+                if (savedEmail) {
+                    emailInput.value = savedEmail;
+                    senhaInput.focus();
+                } else {
+                    emailInput.focus();
+                }
+            } catch (_) {
+                emailInput.focus();
+            }
+        });
+
+        // Tornar funções globais (para os botões de demo)
+        window.copiarTexto = async (texto) => {
+            try {
+                await navigator.clipboard.writeText(texto);
+                showMessage('Texto copiado!', 'success');
+            } catch (e) {
+                showMessage('Erro ao copiar texto', 'error');
+            }
+        };
+
+        window.preencherDemo = () => {
+            emailInput.value = 'admin@quartopodernews.com';
+            senhaInput.value = 'admin123';
+            showMessage('Credenciais preenchidas! Clique em "Entrar no Sistema"', 'info');
+        };
+        
+</script>
+</body>
+</html>

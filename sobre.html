@@ -1,0 +1,1584 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarto Poder News - Sobre Nós</title>
+    <meta name="description" content="Conheça a missão, visão e valores do Quarto Poder News - Jornalismo com verdade, clareza e impacto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+
+        /* Reset e variáveis - PADRÃO CATEGORIAS.HTML */
+        :root {
+            --primary: #0A0A0A;
+            --secondary: #D50000;
+            --accent: #003366;
+            --light: #FFFFFF;
+            --gray-light: #F8F9FA;
+            --gray: #6C757D;
+            --gray-dark: #212529;
+            --transition: all 0.3s ease;
+            --border: 1px solid #E9ECEF;
+            --shadow: 0 5px 15px rgba(0,0,0,0.05);
+            --shadow-hover: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Responsivo global */
+        img, video { max-width: 100%; height: auto; }
+        .container { padding-left: clamp(12px, 3vw, 18px); padding-right: clamp(12px, 3vw, 18px); }
+        body { font-size: clamp(15px, 1.6vw, 16px); }
+
+        /* Evita overflow em telas pequenas */
+        * { max-width: 100%; }
+        .main-content { overflow-x: hidden; }
+    
+
+        /* Header Principal - igual categorias.html */
+        .main-header {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #eaeaea;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo - igual categorias.html */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        .logo-icon .number {
+            color: var(--secondary);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            color: var(--primary);
+            line-height: 1;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo-text .tagline {
+            font-size: 11px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        /* MENU HAMBURGUER IGUAL CATEGORIAS.HTML */
+        .hamburger-menu {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Botão Hamburger - Estilo exato do site */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            padding: 0;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* Animação do botão quando aberto */
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Menu Lateral - Estilo idêntico ao Tribuna Livre */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .menu-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(92vw, 340px);
+            height: 100%;
+            background: #fff;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .menu-sidebar.active {
+            right: 0;
+        }
+
+        /* Header do Menu Mobile */
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .menu-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        .menu-logo-text h3 {
+            font-size: 16px;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.2;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .menu-logo-text .sub {
+            font-size: 10px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 20px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
+            background: #f5f5f5;
+            color: var(--primary);
+        }
+
+        /* Categorias do Menu - Estilo igual ao site */
+        .menu-categories {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .menu-categories li {
+            margin-bottom: 2px;
+        }
+
+        .menu-categories a {
+            display: block;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .menu-categories a:hover {
+            background: #f8f9fa;
+            color: var(--secondary);
+            padding-left: 20px;
+        }
+
+        .menu-categories a.active {
+            background: #f8f9fa;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .menu-categories a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary);
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* Destaques do Menu */
+        .menu-highlights {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .menu-highlights h4 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .highlight-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .highlight-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .highlight-item a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 1.4;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .highlight-item a:hover {
+            color: var(--secondary);
+        }
+
+        .highlight-date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        /* Cabeçalho da Página Sobre */
+        .page-header {
+            text-align: center;
+            padding: clamp(22px, 4vw, 44px) 0;
+            background: var(--gray-light);
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border: var(--border);
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 999px;
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Seções da Página Sobre */
+        .about-section {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+        }
+
+        .about-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-section h2 i {
+            color: var(--secondary);
+        }
+
+        .about-section p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .about-section ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .about-section li {
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+
+        /* Grid de Valores */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        /* Top Bar (PADRÃO PRETO) */
+        .top-bar {
+            background: #111;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            border-bottom: none;
+        }
+
+        .top-bar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 38px;
+            gap: 12px;
+        }
+
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar .date {
+            font-weight: 500;
+            text-transform: lowercase;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .social-icons a {
+            color: #fff;
+            opacity: 0.85;
+            transition: opacity .2s ease, transform .2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 4px;
+        }
+
+        .social-icons a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .social-icons a:focus-visible {
+            outline: 3px solid rgba(213,0,0,.35);
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .top-bar-content {
+                flex-direction: column;
+                gap: 6px;
+                padding: 6px 0;
+                text-align: center;
+            }
+        }
+
+
+        @media (min-width: 768px) {
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .values-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .value-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(213, 0, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: var(--secondary);
+        }
+
+        .value-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 60px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 12px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 4px solid var(--light);
+            box-shadow: 0 0 0 2px var(--secondary);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-content {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+        }
+
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Equipe */
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .team-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--gray);
+            border: 3px solid var(--secondary);
+        }
+
+        .team-member h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .team-member .role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .team-member p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(213, 0, 0, 0.05), rgba(0, 51, 102, 0.05));
+            border-radius: 10px;
+            border: var(--border);
+            margin-top: 40px;
+        }
+
+        .cta-section h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: 2px solid transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--light);
+            border-color: var(--secondary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(213,0,0,.2);
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            border-color: var(--gray-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            border-color: var(--secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================
+           FOOTER IGUAL CATEGORIAS.HTML
+           ============================================ */
+        footer {
+            background: var(--primary);
+            color: var(--light);
+            padding: 44px 0 22px;
+            margin-top: 46px;
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--secondary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px;
+            margin-bottom: 28px;
+        }
+
+        .footer-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 14px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.45rem;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-logo p {
+            color: var(--gray);
+            font-size: .92rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+            position: relative;
+            padding-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section h4::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 42px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(6px);
+        }
+
+        .newsletter-form {
+            margin-top: 12px;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.25);
+            color: var(--light);
+            font-size: .95rem;
+            transition: var(--transition);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255,255,255,.14);
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--secondary);
+            color: var(--light);
+            font-weight: 900;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #b30000;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,.1);
+            padding-top: 18px;
+            color: var(--gray);
+            font-size: .9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav a {
+            color: var(--gray);
+            transition: var(--transition);
+            font-size: .85rem;
+            text-decoration: none;
+        }
+
+        .footer-nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Newsletter Message */
+        .newsletter-message {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .newsletter-message.success {
+            background: rgba(25,135,84,0.1);
+            color: #198754;
+            border: 1px solid rgba(25,135,84,0.2);
+        }
+
+        .newsletter-message.error {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
+        /* ============================================
+           HOTSPOT PARA EQUIPE
+           ============================================ */
+        #qpn-staff-hotspot {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 56px;
+            height: 56px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(213,0,0,0.4);
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+
+        #qpn-staff-hotspot:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (min-width: 768px) {
+            .logo-text h1 {
+                font-size: 28px;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .timeline-item {
+                width: 50%;
+                padding-left: 0;
+                padding-right: 40px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                margin-left: 50%;
+                padding-left: 40px;
+                padding-right: 0;
+            }
+            
+            .timeline-dot {
+                left: auto;
+                right: -10px;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-dot {
+                right: auto;
+                left: -10px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-content {
+                padding: 0 15px;
+            }
+            
+            .menu-sidebar {
+                width: 280px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+                padding: 0 15px;
+            }
+            
+            .about-section {
+                padding: 20px;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                padding-left: 60px;
+            }
+            
+            .timeline-dot {
+                left: 22px;
+            }
+            
+            .copyright {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .logo-text h1 {
+                font-size: 20px;
+            }
+            
+            .menu-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-group .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    
+        /* Responsividade extra (100%) */
+        .page-title { font-size: clamp(22px, 5vw, 34px); }
+        .page-subtitle { font-size: clamp(1rem, 2.4vw, 1.15rem); padding: 0 10px; }
+
+        .about-section { padding: clamp(18px, 3.5vw, 30px); }
+        .about-section h2 { font-size: clamp(1.25rem, 3.5vw, 1.8rem); }
+        .cta-section { padding: clamp(18px, 4vw, 40px); }
+        .cta-section h3 { font-size: clamp(1.3rem, 4vw, 1.8rem); }
+
+        /* Timeline: melhor em telas pequenas */
+        @media (max-width: 420px) {
+            .timeline::before { left: 18px; }
+            .timeline-item { padding-left: 52px; }
+            .timeline-dot { left: 10px; }
+        }
+
+        /* Menu lateral ocupa 100% em telas pequenas já, garantindo scroll */
+        @media (max-width: 480px) {
+            .menu-sidebar { padding: 18px; }
+        }
+
+        /* Acessibilidade: foco visível */
+        .hamburger-btn:focus-visible, .close-menu-btn:focus-visible, .btn:focus-visible, 
+        .newsletter-form input:focus-visible, .newsletter-form button:focus-visible {
+            outline: 3px solid rgba(213,0,0,.35);
+            outline-offset: 3px;
+        }
+
+
+        .page-header, .about-section, .cta-section { word-break: break-word; }
+
+</style>
+</head>
+<body>
+
+   <!-- Top Bar PADRÃO -->
+<div class="top-bar">
+    <div class="container">
+        <div class="top-bar-content">
+            <div class="top-bar-left">
+                <span class="date" id="currentDate"></span>
+            </div>
+            <div class="top-bar-right">
+                <div class="social-icons">
+                    <a href="https://web.facebook.com/profile.php?id=61587173375119&sk=about" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/oquartopodernews/" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container header-content">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><span class="number">4</span></div>
+                <div class="logo-text">
+                    <h1>QUARTO PODER NEWS</h1>
+                    <div class="tagline">O JORNAL QUE FAZ A DIFERENÇA</div>
+                </div>
+            </a>
+
+            <!-- Menu Hamburguer -->
+            <div class="hamburger-menu">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay do Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Menu Lateral -->
+    <div class="menu-sidebar" id="menuSidebar">
+        <div class="menu-header">
+            <div class="menu-logo">
+                <div class="menu-logo-icon"><span class="number">4</span></div>
+                <div class="menu-logo-text">
+                    <h3>QUARTO PODER NEWS</h3>
+                    <div class="sub">Menu Principal</div>
+                </div>
+            </div>
+            <button class="close-menu-btn" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Categorias do Menu -->
+        <ul class="menu-categories">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="todas-noticias.html">Todas as Notícias</a></li>
+            <li><a href="sobre.html" class="active">Sobre Nós</a></li>
+            <li><a href="contato.html">Contato</a></li>
+        </ul>
+
+        <!-- Destaques -->
+        <div class="menu-highlights">
+            <h4>Destaques</h4>
+            <div class="highlight-item">
+                <a href="noticia.html?id=1">Caiado se filia ao PSD e entra no tabuleiro presidencial de 2026</a>
+                <div class="highlight-date">28/01/2026</div>
+            </div>
+            <div class="highlight-item">
+                <a href="noticia.html?id=2">O fim do mito do nômade digital: economia por trás do declínio</a>
+                <div class="highlight-date">24/01/2026</div>
+            </div>
+            <div class="highlight-item">
+                <a href="noticia.html?id=3">Nikolas Ferreira consolida liderança conservadora</a>
+                <div class="highlight-date">22/01/2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Cabeçalho -->
+            <div class="page-header">
+                <h1 class="page-title">Sobre o Quarto Poder News</h1>
+                <p class="page-subtitle">Conheça nossa história, missão e os valores que nos guiam na busca por um jornalismo ético, transparente e impactante.</p>
+            </div>
+
+            <!-- Nossa História -->
+            <div class="about-section">
+                <h2><i class="fas fa-history"></i> Nossa História</h2>
+                <p>Fundado em 2024, o <strong>Quarto Poder News</strong> nasceu da necessidade de um jornalismo independente e comprometido com a verdade. Desde o início, nossa missão foi clara: informar com responsabilidade, contextualizar os fatos e empoderar nossos leitores com conhecimento.</p>
+                <p>Começamos como um jornal impresso local e, ao longo dos anos, evoluímos para uma plataforma digital completa, mantendo sempre nosso compromisso com a qualidade editorial e a independência jornalística.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
+                            <h4>Fundação</h4>
+                            <p>Nasce o Quarto Poder News como jornal impresso regional, com foco em jornalismo investigativo.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-content">
+                            <h4>Expansão Digital</h4>
+                            <p>Lançamento do nosso portal online, ampliando nosso alcance e modernizando nossa operação.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-content">
+                            <h4>Consolidação</h4>
+                            <p>Tornamo-nos referência em jornalismo digital na região, com equipe especializada e cobertura ampliada.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2026</div>
+                        <div class="timeline-content">
+                            <h4>Reinvenção</h4>
+                            <p>Reposicionamento completo com novo design, mais categorias e foco em experiência do leitor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Missão e Valores -->
+            <div class="about-section">
+                <h2><i class="fas fa-bullseye"></i> Missão, Visão e Valores</h2>
+                <p><strong>Missão:</strong> Informar com precisão, contextualizar os fatos e contribuir para uma sociedade mais consciente e participativa.</p>
+                <p><strong>Visão:</strong> Ser referência nacional em jornalismo digital, reconhecido pela qualidade, independência e impacto social.</p>
+                
+                <h3 style="margin: 25px 0 15px;">Nossos Valores</h3>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <h3>Veracidade</h3>
+                        <p>Compromisso absoluto com a verdade e a precisão dos fatos. Checagem rigorosa antes de qualquer publicação.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Equilíbrio</h3>
+                        <p>Apresentamos todos os lados da história, permitindo que nossos leitores formem suas próprias conclusões.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3>Ética</h3>
+                        <p>Seguimos rigorosos princípios éticos em todas as nossas reportagens e relações com fontes e leitores.</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Impacto Social</h3>
+                        <p>Acreditamos no poder do jornalismo para transformar realidades e promover justiça social.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nossa Equipe -->
+            <div class="about-section">
+                <h2><i class="fas fa-users"></i> Nossa Equipe</h2>
+                <p>Contamos com uma equipe multidisciplinar de jornalistas, editores, revisores e especialistas comprometidos com a excelência jornalística. Cada membro traz experiência e paixão pelo ofício de informar.</p>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4>Miriam Barbosa</h4>
+                        <div class="role">Editor-Chefe</div>
+                        <p>20 anos de experiência em jornalismo político. Prêmio Esso de Jornalismo 2018.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4>joca</h4>
+                        <div class="role">Editor-Chefe</div>
+                        <p>Especialista em mercados financeiros e políticas econômicas. Mestre em Economia pela USP.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4>Paulo Tomaz</h4>
+                        <div class="role">Programador</div>
+                        <p>Desenvolvedor de sistemas full stack developer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compromisso com o Leitor -->
+            <div class="about-section">
+                <h2><i class="fas fa-handshake"></i> Compromisso com o Leitor</h2>
+                <p>No Quarto Poder News, nosso leitor está no centro de tudo que fazemos. Por isso:</p>
+                <ul>
+                    <li><strong>Transparência:</strong> Explicamos como apuramos cada informação e corrigimos erros publicamente.</li>
+                    <li><strong>Qualidade:</strong> Investimos em treinamento contínuo da equipe e em tecnologia para melhorar nosso trabalho.</li>
+                    <li><strong>Diálogo:</strong> Mantemos canais abertos para sugestões, críticas e colaborações dos leitores.</li>
+                    <li><strong>Independência:</strong> Não aceitamos interferência de anunciantes, políticos ou grupos de interesse em nossa linha editorial.</li>
+                </ul>
+            </div>
+
+            <!-- CTA Final -->
+            <div class="cta-section">
+                <h3>Faça parte da nossa comunidade</h3>
+                <p>Inscreva-se para receber as principais notícias, participe dos nossos fóruns de discussão ou entre em contato com nossa redação.</p>
+                <div class="btn-group">
+                    <a href="contato.html" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Entre em Contato
+                    </a>
+                    <a href="categorias.html" class="btn btn-secondary">
+                        <i class="fas fa-newspaper"></i> Explore Categorias
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer IGUAL CATEGORIAS.HTML -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon"><span class="number">4</span></div>
+                    <h3>QUARTO PODER NEWS</h3>
+                    <p>Jornalismo independente com compromisso com a verdade, integridade e impacto.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Editorias</h4>
+                    <ul class="footer-links">
+                        <li><a href="todas-noticias.html?categoria=Política">Política</a></li>
+                        <li><a href="todas-noticias.html?categoria=Economia">Economia</a></li>
+                        <li><a href="todas-noticias.html?categoria=Esportes">Esportes</a></li>
+                        <li><a href="todas-noticias.html?categoria=Cultura">Cultura</a></li>
+                        <li><a href="todas-noticias.html?categoria=Tecnologia">Tecnologia</a></li>
+                        <li><a href="todas-noticias.html?categoria=Saúde">Saúde</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Institucional</h4>
+                    <ul class="footer-links">
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        
+                        <li><a href="categorias.html">Categorias</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Inscreva-se</h4>
+                    <p>As principais notícias do dia, direto da redação do Quarto Poder News.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required />
+                        <button type="submit">INSCREVER</button>
+                    </form>
+                    <div class="newsletter-message" id="newsletterMessage"></div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2024-2026 Quarto Poder News. Todos os direitos reservados.</p>
+                <div class="footer-nav">
+                    <a href="termos.html">Termos de Uso</a>
+                    <a href="privacidade.html">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="qpn-staff-hotspot" title="Acesso equipe" aria-label="Acesso equipe">
+        <i class="fas fa-user-shield"></i>
+    </div>
+
+    
+    <script>
+        // ==================== API HELPER (mesma origem) ====================
+        async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
+            const res = await fetch(path, {
+                method,
+                credentials,
+                headers: { "Content-Type": "application/json", ...headers },
+                body: body ? JSON.stringify(body) : undefined,
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data?.error || `Erro HTTP ${res.status}`);
+            return data;
+        }
+
+        const Auth = { session: () => api("/api/check-session") };
+        // ==================== MENU DESTAQUES (sem estático) ====================
+        async function renderMenuDestaques() {
+            const menu = document.querySelector('.menu-highlights');
+            if (!menu) return;
+
+            // garante um container
+            let list = menu.querySelector('#menuHighlightsList');
+            if (!list) {
+                // remove quaisquer itens estáticos existentes
+                menu.querySelectorAll('.highlight-item').forEach(el => el.remove());
+
+                list = document.createElement('div');
+                list.id = 'menuHighlightsList';
+                menu.appendChild(list);
+            } else {
+                list.innerHTML = '';
+            }
+
+            try {
+                const data = await Public.destaques();
+                const itens = Array.isArray(data) ? data : (data?.destaques || []);
+                if (!itens.length) return;
+
+                // pega no máximo 3 para o menu
+                itens.slice(0, 3).forEach(n => {
+                    const a = document.createElement('a');
+                    a.href = `noticia.html?id=${n.id}`;
+
+                    const wrap = document.createElement('div');
+                    wrap.className = 'highlight-item';
+
+                    const title = document.createElement('div');
+                    title.appendChild(a);
+                    a.textContent = n.titulo || 'Sem título';
+
+                    const dt = document.createElement('div');
+                    dt.className = 'highlight-date';
+                    const rawDate = n.data_formatada || n.data_publicacao;
+                    dt.textContent = rawDate ? new Date(rawDate).toLocaleDateString('pt-BR') : '';
+
+                    wrap.appendChild(title.firstChild); // link
+                    wrap.appendChild(dt);
+                    list.appendChild(wrap);
+                });
+            } catch (e) {
+                // se o servidor estiver offline, apenas não mostra nada (zerado)
+                // console.warn('Menu destaques indisponível:', e);
+            }
+        }
+
+
+        // ==================== DATA (TOP BAR) ====================
+        function updateDate() {
+            const now = new Date();
+            const dateEl = document.getElementById('currentDate');
+            if (!dateEl) return;
+
+            const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+            dateEl.textContent = now.toLocaleDateString('pt-BR', options);
+        }
+
+        // ==================== MENU (hamburger) ====================
+        function initHamburgerMenu() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuSidebar = document.getElementById('menuSidebar');
+
+            if (!hamburgerBtn || !closeMenuBtn || !menuOverlay || !menuSidebar) return;
+
+            const closeMenu = () => {
+                hamburgerBtn.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                menuSidebar.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.add('active');
+                menuOverlay.classList.add('active');
+                menuSidebar.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeMenuBtn.addEventListener('click', closeMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && menuSidebar.classList.contains('active')) closeMenu();
+            });
+
+            document.querySelectorAll('.menu-categories a').forEach(link => {
+                link.addEventListener('click', () => setTimeout(closeMenu, 150));
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && menuSidebar.classList.contains('active')) closeMenu();
+            });
+        }
+
+        // ==================== NEWSLETTER (API real) ====================
+        function initNewsletter() {
+            const form = document.getElementById('newsletterForm');
+            const msg = document.getElementById('newsletterMessage');
+            if (!form || !msg) return;
+
+            const show = (text, type) => {
+                msg.textContent = text;
+                msg.className = `newsletter-message ${type || ''}`.trim();
+                msg.style.display = 'block';
+                if (type === 'success') setTimeout(() => (msg.style.display = 'none'), 5000);
+            };
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = (document.getElementById('newsletterEmail')?.value || '').trim();
+
+                if (!email || !email.includes('@')) return show('Por favor, insira um e-mail válido.', 'error');
+
+                show('Processando inscrição...', '');
+
+                try {
+                    const result = await api('/api/newsletter/inscrever', { method: 'POST', body: { email } });
+                    if (result?.success) {
+                        show(result?.message || '🎉 Inscrição realizada com sucesso!', 'success');
+                        form.reset();
+                    } else {
+                        show(result?.error || 'Erro ao processar inscrição.', 'error');
+                    }
+                } catch (err) {
+                    console.error('Erro newsletter:', err);
+                    show('Erro ao processar inscrição. Tente novamente.', 'error');
+                }
+            });
+        }
+
+        // ==================== HOTSPOT (mostra só logado) ====================
+        async function initStaffHotspot() {
+            const hotspot = document.getElementById('qpn-staff-hotspot');
+            if (!hotspot) return;
+
+            hotspot.style.display = 'none';
+            hotspot.addEventListener('click', () => window.location.href = 'login.html');
+
+            try {
+                const session = await Auth.session();
+                if (session?.authenticated) {
+                    hotspot.style.display = 'flex';
+                    hotspot.title = `Acesso: ${session?.user?.nome || 'Equipe'}`;
+                }
+            } catch {
+                hotspot.style.display = 'none';
+            }
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', async () => {
+            updateDate();
+            setInterval(updateDate, 60000);
+
+            initHamburgerMenu();
+            initNewsletter();
+            await initStaffHotspot();
+        });
+    </script>
+</body>
+</html>
+
+<script>renderMenuDestaques();</script>

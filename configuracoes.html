@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quarto Poder News - Configurações</title>
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0A0A0A; --secondary:#D50000; --accent:#003366; --light:#fff;
+      --gray-light:#F8F9FA; --gray:#6C757D; --gray-dark:#212529;
+      --border:1px solid #E9ECEF; --shadow:0 10px 30px rgba(0,0,0,.08); --shadow-hover:0 15px 40px rgba(0,0,0,.12);
+      --transition:all .35s cubic-bezier(.175,.885,.32,1.1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--gray-light);color:var(--gray-dark);line-height:1.7;overflow-x:hidden}
+    h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:700}
+    a{text-decoration:none;color:inherit}
+    :focus-visible{outline:3px solid rgba(213,0,0,.3);outline-offset:3px}
+    input,select,button,textarea{font-size:16px}
+
+    /* Header */
+    .admin-header{background:var(--primary);color:var(--light);padding:15px 0;border-bottom:5px solid var(--secondary);position:sticky;top:0;z-index:1000;box-shadow:0 5px 20px rgba(0,0,0,.2)}
+    .header-container{max-width:1400px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .admin-logo{display:flex;align-items:center;gap:15px;transition:var(--transition);min-width:0}
+    .admin-logo:hover{transform:translateY(-2px)}
+    .admin-logo-icon{width:56px;height:56px;background:var(--light);color:var(--primary);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;flex-shrink:0;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+    .admin-logo-icon .number{color:var(--secondary)}
+    .admin-logo-text h1{font-size:1.6rem;color:var(--light);margin-bottom:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
+    .admin-logo-text p{color:rgba(255,255,255,.8);font-size:.85rem;letter-spacing:.5px;text-transform:uppercase}
+    .admin-user-info{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .user-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);padding:10px 20px;border-radius:999px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);min-width:0}
+    .user-avatar-mini{width:32px;height:32px;border-radius:50%;background:var(--secondary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;flex-shrink:0}
+    .user-card span{font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw}
+    .logout-btn{background:var(--secondary);color:var(--light);border:none;padding:12px 24px;border-radius:999px;font-weight:900;cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:10px;letter-spacing:.5px;font-size:.9rem;border:2px solid var(--secondary);white-space:nowrap}
+    .logout-btn:hover{background:transparent;color:var(--secondary);transform:translateY(-2px);box-shadow:0 8px 20px rgba(213,0,0,.3)}
+
+    /* Layout */
+    .admin-container{max-width:1400px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:280px 1fr;gap:30px;min-height:calc(100vh - 120px)}
+    .admin-sidebar{background:var(--light);border-radius:16px;box-shadow:var(--shadow);border:var(--border);padding:25px;height:fit-content;position:sticky;top:100px}
+    .sidebar-title{font-size:1.5rem;color:var(--primary);margin-bottom:25px;padding-bottom:12px;border-bottom:3px solid var(--accent);position:relative}
+    .sidebar-title::after{content:"";position:absolute;left:0;bottom:-3px;width:50px;height:3px;background:var(--secondary)}
+    .admin-menu{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;padding:0}
+    .admin-menu li{margin:0}
+    .admin-menu a{display:flex;align-items:center;gap:15px;padding:16px 20px;color:var(--gray-dark);border-radius:12px;transition:var(--transition);font-weight:700;border:2px solid transparent}
+    .admin-menu a:hover{background:rgba(213,0,0,.08);color:var(--secondary);transform:translateX(5px);border-color:rgba(213,0,0,.2)}
+    .admin-menu a.active{background:var(--secondary);color:var(--light);transform:translateX(5px);box-shadow:0 5px 15px rgba(213,0,0,.2)}
+    .admin-menu a i{width:20px;font-size:1.1rem}
+
+    .admin-main{background:var(--light);border-radius:16px;box-shadow:var(--shadow);border:var(--border);padding:30px;animation:fadeIn .6s ease;overflow:hidden}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .page-header{margin-bottom:25px;padding-bottom:18px;border-bottom:var(--border)}
+    .page-title{font-size:2.2rem;color:var(--primary);margin-bottom:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .page-title i{color:var(--secondary)}
+    .page-subtitle{color:var(--gray);font-size:1rem;max-width:800px}
+
+    .message{padding:16px 20px;border-radius:12px;margin-bottom:18px;font-weight:700;display:none;animation:fadeIn .5s ease;border:2px solid transparent;font-size:.95rem}
+    .message.success{background:rgba(46,204,113,.1);color:#27ae60;border-color:rgba(46,204,113,.2)}
+    .message.error{background:rgba(231,76,60,.1);color:#c0392b;border-color:rgba(231,76,60,.2)}
+    .message.info{background:rgba(52,152,219,.1);color:#2980b9;border-color:rgba(52,152,219,.2)}
+    .message.warning{background:rgba(241,196,15,.12);color:#8a6d00;border-color:rgba(241,196,15,.25)}
+    .message i{margin-right:10px;font-size:1.1rem}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media (min-width: 980px){.grid{grid-template-columns:1fr 1fr}}
+
+    .card{background:var(--gray-light);border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:22px}
+    .card h3{font-size:1.35rem;color:var(--primary);display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .card h3 i{color:var(--secondary)}
+    .card p{color:var(--gray);margin-bottom:14px}
+    .danger{background:rgba(213,0,0,.06);border-color:rgba(213,0,0,.15)}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;border-radius:12px;border:2px solid transparent;font-weight:900;cursor:pointer;transition:var(--transition);letter-spacing:.4px;font-family:'Inter',sans-serif;min-height:48px;white-space:nowrap}
+    .btn:active{transform:scale(.98)}
+    .btn-primary{background:var(--secondary);color:var(--light);border-color:var(--secondary)}
+    .btn-primary:hover:not(:disabled){background:transparent;color:var(--secondary);transform:translateY(-2px);box-shadow:0 8px 20px rgba(213,0,0,.2)}
+    .btn-secondary{background:var(--light);color:var(--gray-dark);border-color:rgba(0,0,0,.06)}
+    .btn-secondary:hover{background:var(--gray);color:var(--light);border-color:var(--gray);transform:translateY(-2px)}
+    .btn-danger{background:#c0392b;color:#fff;border-color:#c0392b}
+    .btn-danger:hover:not(:disabled){background:transparent;color:#c0392b;border-color:#c0392b;transform:translateY(-2px)}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+    .btn-block{width:100%}
+
+    .form-group{margin-top:12px}
+    .form-label{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--gray-dark);margin-bottom:8px}
+    .form-label i{color:var(--secondary)}
+    .form-input{width:100%;padding:14px 16px;border:var(--border);border-radius:12px;background:var(--light);transition:var(--transition);font-family:'Inter',sans-serif}
+    .form-input:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(213,0,0,.15)}
+    .help{font-size:.92rem;color:var(--gray)}
+    .help strong{color:var(--primary)}
+
+    /* ============================================
+       RESPONSIVIDADE (igual ao admin.html)
+       ============================================ */
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      .admin-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .admin-sidebar {
+        position: static;
+        top: auto;
+      }
+
+      .admin-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .admin-menu a {
+        flex: 1;
+        min-width: 200px;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .admin-menu a:hover,
+      .admin-menu a.active {
+        transform: none;
+      }
+
+      .admin-logo-text h1 {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Mobile grande */
+    @media (max-width: 768px) {
+      .header-container {
+        padding: 0 15px;
+        gap: 10px;
+      }
+
+      .admin-container {
+        padding: 0 15px;
+      }
+
+      .admin-main {
+        padding: 20px;
+      }
+
+      .admin-sidebar {
+        padding: 15px;
+      }
+
+      .admin-logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+
+      .admin-user-info {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .user-card {
+        flex: 1 1 100%;
+        justify-content: center;
+        order: 2;
+      }
+
+      .logout-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+        order: 3;
+      }
+
+      /* botões em stack no mobile */
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /* Mobile pequeno */
+    @media (max-width: 576px) {
+      .admin-menu a {
+        min-width: 100%;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Mobile muito pequeno */
+    @media (max-width: 400px) {
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+
+      .admin-logo {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .admin-user-info {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .user-card {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .logout-btn {
+        width: 100%;
+      }
+    }
+
+    /* ============================================
+       ACESSIBILIDADE
+       ============================================ */
+    :focus-visible {
+      outline: 3px solid rgba(213, 0, 0, 0.3);
+      outline-offset: 3px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header class="admin-header">
+    <div class="header-container">
+      <a href="#" class="admin-logo" target="_blank" rel="noopener">
+        <div class="admin-logo-icon"><span class="number">4</span></div>
+        <div class="admin-logo-text">
+          <h1>QUARTO PODER NEWS</h1>
+          <p>PAINEL ADMINISTRATIVO</p>
+        </div>
+      </a>
+
+      <div class="admin-user-info">
+        <div class="user-card" id="userInfo">
+          <div class="user-avatar-mini">AD</div>
+          <span id="userName">Carregando...</span>
+        </div>
+        <button class="logout-btn" id="logoutBtn" type="button">
+          <i class="fas fa-sign-out-alt"></i> SAIR
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-container">
+    <aside class="admin-sidebar">
+      <h2 class="sidebar-title">Menu Admin</h2>
+      <ul class="admin-menu">
+        <li><a href="admin.html"><i class="fas fa-newspaper"></i> Gerenciar Notícias</a></li>
+        <li><a href="usuarios.html"><i class="fas fa-users"></i> Usuários</a></li>
+        <li><a href="inscritos.html"><i class="fas fa-envelope-open-text"></i> Inscritos</a></li>
+        <li><a href="configuracoes.html" class="active"><i class="fas fa-gear"></i> Configurações</a></li>
+        <li><a href="index.html" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Ver Site</a></li>
+      </ul>
+
+      <div class="card danger" style="margin-top:16px">
+        <h3><i class="fas fa-triangle-exclamation"></i> Atenção</h3>
+        <p class="help">
+          Essas ações podem <strong>baixar</strong> ou <strong>substituir</strong> o banco do sistema inteiro.
+          Disponível apenas para perfil <strong>admin</strong>.
+        </p>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div id="message" class="message"></div>
+
+      <div class="page-header">
+        <h2 class="page-title"><i class="fas fa-gear"></i> Configurações</h2>
+        <p class="page-subtitle">
+          Ferramentas administrativas para backup e restauração do banco de dados do sistema.
+        </p>
+      </div>
+
+      <div class="grid">
+        <section class="card">
+          <h3><i class="fas fa-download"></i> Backup completo (baixar)</h3>
+          <p>
+            Baixe um arquivo com o banco de dados inteiro. Ideal para guardar um backup manual antes de alterações.
+          </p>
+
+          <button class="btn btn-primary btn-block" id="btnExport" type="button">
+            <i class="fas fa-database"></i> Baixar banco completo
+          </button>
+
+          <div class="help" style="margin-top:10px">
+            <strong>Dica:</strong> faça o download antes de atualizações ou grandes mudanças no painel.
+          </div>
+        </section>
+
+        <section class="card danger">
+          <h3><i class="fas fa-upload"></i> Restauração completa (enviar)</h3>
+          <p>
+            Envie um arquivo do banco para restaurar o sistema inteiro. Essa ação pode sobrescrever dados atuais.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="dbFile"><i class="fas fa-file-arrow-up"></i> Arquivo do banco</label>
+            <input class="form-input" id="dbFile" type="file" accept=".sql,.sqlite,.db,.json,.zip,.gz" />
+            <div class="help" style="margin-top:8px">
+              Formatos aceitos dependem do servidor. Idealmente, use o mesmo formato gerado no “Backup completo”.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirmText"><i class="fas fa-key"></i> Confirmação</label>
+            <input class="form-input" id="confirmText" type="text" placeholder='Digite: RESTAURAR' />
+            <div class="help" style="margin-top:8px">
+              Para evitar erros, só habilitamos o envio após a confirmação.
+            </div>
+          </div>
+
+          <button class="btn btn-danger btn-block" id="btnImport" type="button" disabled>
+            <i class="fas fa-triangle-exclamation"></i> Enviar e restaurar banco
+          </button>
+
+          <div class="help" style="margin-top:10px">
+            <strong>Importante:</strong> se possível, faça um backup antes de restaurar.
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
+      const res = await fetch(path, { method, credentials, headers: { ...headers }, body });
+      const isJson = (res.headers.get("content-type") || "").includes("application/json");
+      const data = isJson ? await res.json().catch(() => ({})) : null;
+      if (!res.ok) throw new Error(data?.error || data?.message || `Erro HTTP ${res.status}`);
+      return data;
+    }
+
+    function showMessage(text, type = "info") {
+      const el = document.getElementById("message");
+      if (!el) return;
+      const icon = type === "success" ? "check-circle" :
+                   type === "error" ? "exclamation-triangle" :
+                   type === "warning" ? "exclamation-circle" : "info-circle";
+      el.innerHTML = `<i class="fas fa-${icon}"></i> ${text}`;
+      el.className = `message ${type}`;
+      el.style.display = "block";
+      if (type === "success" || type === "info") setTimeout(() => { el.style.display = "none"; }, 4000);
+    }
+
+    function escapeHtml(s) {
+      return String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    // AUTH
+    let usuarioLogado = null;
+
+    async function requireAdmin() {
+      try {
+        const s = await api("/api/check-session");
+        if (!s?.authenticated) { window.location.href = "login.html"; return null; }
+        usuarioLogado = s.user || null;
+
+        const perfil = String(usuarioLogado?.perfil || "").toLowerCase();
+        if (perfil !== "admin") {
+          showMessage("Acesso negado: esta página é exclusiva para administradores.", "error");
+          setTimeout(() => { window.location.href = "admin.html"; }, 1800);
+          return null;
+        }
+
+        const userInfo = document.getElementById("userInfo");
+        if (userInfo) {
+          const ini = (usuarioLogado?.nome || "U")
+            .split(" ").filter(Boolean).map(n => n[0]).join("").toUpperCase().slice(0, 2);
+          userInfo.innerHTML = `
+            <div class="user-avatar-mini">${escapeHtml(ini || "AD")}</div>
+            <span>${escapeHtml(usuarioLogado.nome || "Admin")} (${escapeHtml(usuarioLogado.perfil || "admin")})</span>
+          `;
+        }
+
+        return usuarioLogado;
+      } catch (e) {
+        console.error(e);
+        window.location.href = "login.html";
+        return null;
+      }
+    }
+
+    async function logout() {
+      if (!confirm("Tem certeza que deseja sair do painel administrativo?")) return;
+      try { await api("/api/logout", { method: "POST" }); } catch (_) {}
+      window.location.href = "login.html";
+    }
+
+    // EXPORT (DOWNLOAD)
+    async function exportDb() {
+      const btn = document.getElementById("btnExport");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparando...';
+
+      try {
+        const res = await fetch("/api/admin/db/export", { method: "GET", credentials: "same-origin" });
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || `Erro HTTP ${res.status}`);
+        }
+
+        const blob = await res.blob();
+        const cd = res.headers.get("content-disposition") || "";
+        const match = cd.match(/filename\*?=(?:UTF-8'')?["']?([^"';]+)["']?/i);
+        const filename = match ? decodeURIComponent(match[1]) : `backup-db-${new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")}.zip`;
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        showMessage("Backup baixado com sucesso.", "success");
+      } catch (e) {
+        console.error(e);
+        showMessage(`Falha ao baixar backup: ${e.message}`, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-database"></i> Baixar banco completo';
+      }
+    }
+
+    // IMPORT (UPLOAD)
+    async function importDb() {
+      const fileInput = document.getElementById("dbFile");
+      const file = fileInput.files?.[0];
+      if (!file) return showMessage("Selecione um arquivo do banco antes de enviar.", "warning");
+
+      if (!confirm("ATENÇÃO: isso pode substituir o banco inteiro. Deseja continuar?")) return;
+
+      const btn = document.getElementById("btnImport");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+
+        const res = await fetch("/api/admin/db/import", {
+          method: "POST",
+          credentials: "same-origin",
+          body: fd
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data?.error || data?.message || `Erro HTTP ${res.status}`);
+
+        showMessage("Banco restaurado com sucesso. Recarregue o painel para ver os dados.", "success");
+      } catch (e) {
+        console.error(e);
+        showMessage(`Falha ao restaurar: ${e.message}`, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Enviar e restaurar banco';
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const user = await requireAdmin();
+      if (!user) return;
+
+      document.getElementById("logoutBtn").addEventListener("click", logout);
+      document.getElementById("btnExport").addEventListener("click", exportDb);
+
+      const confirmText = document.getElementById("confirmText");
+      const btnImport = document.getElementById("btnImport");
+      const fileInput = document.getElementById("dbFile");
+
+      function refreshImportButton() {
+        const ok = (confirmText.value || "").trim().toUpperCase() === "RESTAURAR" && !!fileInput.files?.[0];
+        btnImport.disabled = !ok;
+      }
+
+      confirmText.addEventListener("input", refreshImportButton);
+      fileInput.addEventListener("change", refreshImportButton);
+
+      btnImport.addEventListener("click", importDb);
+
+      showMessage(`Bem-vindo(a), ${user.nome || "admin"}!`, "success");
+    });
+  </script>
+</body>
+</html>

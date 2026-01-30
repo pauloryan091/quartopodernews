@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarto Poder News - Todas as Notícias</title>
+    <meta name="description" content="Acompanhe todas as notícias do Quarto Poder News em um só lugar">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e variáveis - PADRÃO CATEGORIAS.HTML */
+        :root {
+            --primary: #0A0A0A;
+            --secondary: #D50000;
+            --accent: #003366;
+            --light: #FFFFFF;
+            --gray-light: #F8F9FA;
+            --gray: #6C757D;
+            --gray-dark: #212529;
+            --transition: all 0.3s ease;
+            --border: 1px solid #E9ECEF;
+            --shadow: 0 5px 15px rgba(0,0,0,0.05);
+            --shadow-hover: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Top Bar - PADRÃO PRETO (igual ao screenshot) */
+        .top-bar {
+            background: #111;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 0.85rem;
+        }
+
+        .top-bar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 38px;
+        }
+
+        .top-bar-left .date {
+            font-weight: 500;
+            text-transform: lowercase;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .social-icons a {
+            color: #fff;
+            opacity: 0.85;
+            transition: opacity .2s ease, transform .2s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icons a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .top-bar-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 6px;
+                padding: 4px 0;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        /* Header Principal - igual categorias.html */
+        .main-header {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #eaeaea;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo - igual categorias.html */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        .logo-icon .number {
+            color: var(--secondary);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            color: var(--primary);
+            line-height: 1;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo-text .tagline {
+            font-size: 11px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        /* MENU HAMBURGUER IGUAL CATEGORIAS.HTML */
+        .hamburger-menu {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Botão Hamburger - Estilo exato do site */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            padding: 0;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* Animação do botão quando aberto */
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Menu Lateral - Estilo idêntico ao Tribuna Livre */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .menu-sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 320px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .menu-sidebar.active {
+            right: 0;
+        }
+
+        /* Header do Menu Mobile */
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .menu-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 900;
+            border-radius: 4px;
+        }
+
+        .menu-logo-text h3 {
+            font-size: 16px;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.2;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .menu-logo-text .sub {
+            font-size: 10px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 20px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
+            background: #f5f5f5;
+            color: var(--primary);
+        }
+
+        /* Categorias do Menu - Estilo igual ao site */
+        .menu-categories {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .menu-categories li {
+            margin-bottom: 2px;
+        }
+
+        .menu-categories a {
+            display: block;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .menu-categories a:hover {
+            background: #f8f9fa;
+            color: var(--secondary);
+            padding-left: 20px;
+        }
+
+        .menu-categories a.active {
+            background: #f8f9fa;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .menu-categories a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary);
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* Destaques do Menu */
+        .menu-highlights {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .menu-highlights h4 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .highlight-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .highlight-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .highlight-item a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 1.4;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .highlight-item a:hover {
+            color: var(--secondary);
+        }
+
+        .highlight-date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 999px;
+        }
+
+        .page-description {
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 25px auto 40px;
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
+           SISTEMA DE FILTROS AVANÇADOS (ATUALIZADO)
+           ============================================ */
+        .filters-container {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filters-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .filters-title i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-label {
+            display: block;
+            color: var(--gray-dark);
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: .9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label i {
+            color: var(--secondary);
+            width: 18px;
+        }
+
+        .filter-select, .filter-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: var(--border);
+            border-radius: 8px;
+            font-size: .95rem;
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--gray-dark);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .filter-select:focus, .filter-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(213,0,0,.1);
+        }
+
+        .date-range {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: .95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            white-space: nowrap;
+            border: 2px solid transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--light);
+            border-color: var(--secondary);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: transparent;
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(213,0,0,.2);
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            border-color: var(--gray-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            border-color: var(--secondary);
+        }
+
+        .btn-sm {
+            padding: 10px 16px;
+            font-size: .85rem;
+        }
+
+        .btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Botão para expandir filtros avançados */
+        .advanced-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary);
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: .85rem;
+            transition: var(--transition);
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        .advanced-toggle:hover {
+            gap: 10px;
+        }
+
+        .advanced-filters {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: var(--border);
+        }
+
+        .advanced-filters.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ============================================
+           CONTADOR DE RESULTADOS E ORDENAÇÃO
+           ============================================ */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .results-count {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .results-count i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .results-count .count-number {
+            color: var(--secondary);
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sort-label {
+            color: var(--gray);
+            font-size: .85rem;
+            font-weight: 600;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: var(--border);
+            border-radius: 8px;
+            font-size: .85rem;
+            background: var(--light);
+            color: var(--gray-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 180px;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(213,0,0,.1);
+        }
+
+        /* ============================================
+           GRID DE NOTÍCIAS RESPONSIVO
+           ============================================ */
+        .news-grid-container {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
+        }
+
+        /* Sistema de Imagens Responsivas */
+        .news-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--gray-light) 25%, #e9ecef 25%, #e9ecef 50%, var(--gray-light) 50%, var(--gray-light) 75%, #e9ecef 75%, #e9ecef);
+            background-size: 20px 20px;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+
+        /* Categoria */
+        .news-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary);
+            color: var(--light);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: .7rem;
+            font-weight: 900;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        /* Destaque */
+        .news-destaque {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #ffd700, #ff6b00);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: .65rem;
+            font-weight: 900;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        /* Conteúdo da notícia */
+        .news-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            line-height: 1.3;
+            color: var(--primary);
+            margin-bottom: 12px;
+            flex: 1;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .news-excerpt {
+            color: var(--gray);
+            font-size: .9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Metadados */
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            color: var(--gray);
+            font-size: .8rem;
+            border-top: var(--border);
+            padding-top: 15px;
+            margin-top: auto;
+        }
+
+        .news-meta-left {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .meta-item i {
+            color: var(--secondary);
+            font-size: .8rem;
+        }
+
+        .read-more {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: .85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            gap: 10px;
+        }
+
+        /* ============================================
+           PAGINAÇÃO
+           ============================================ */
+        .pagination-container {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: var(--border);
+            text-align: center;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: var(--border);
+            background: var(--light);
+            color: var(--gray-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: .85rem;
+        }
+
+        .page-btn:hover:not(:disabled):not(.active) {
+            background: var(--secondary);
+            color: var(--light);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .page-btn.active {
+            background: var(--secondary);
+            color: var(--light);
+            border-color: var(--secondary);
+        }
+
+        .page-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .page-btn i {
+            font-size: .85rem;
+        }
+
+        .page-info {
+            color: var(--gray);
+            font-size: .85rem;
+            margin-top: 12px;
+        }
+
+        /* ============================================
+           ESTADOS ESPECIAIS
+           ============================================ */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray);
+            background: var(--light);
+            border-radius: 10px;
+            border: 2px dashed var(--gray-light);
+            margin: 30px 0;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: .3;
+        }
+
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            max-width: 500px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--gray);
+            font-size: 1rem;
+            grid-column: 1 / -1;
+        }
+
+        .loading i {
+            margin-right: 8px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            background: var(--gray-light);
+            border: 2px solid transparent;
+            grid-column: 1 / -1;
+            font-weight: 600;
+            font-size: .9rem;
+        }
+
+        .message.error {
+            background: rgba(220,53,69,.1);
+            color: #dc3545;
+            border-color: rgba(220,53,69,.2);
+        }
+
+        .message.success {
+            background: rgba(25,135,84,.1);
+            color: #198754;
+            border-color: rgba(25,135,84,.2);
+        }
+
+        /* ============================================
+           FOOTER IGUAL CATEGORIAS.HTML
+           ============================================ */
+        footer {
+            background: var(--primary);
+            color: var(--light);
+            padding: 44px 0 22px;
+            margin-top: 46px;
+            position: relative;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--secondary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            margin-bottom: 28px;
+        }
+
+        .footer-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 14px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.45rem;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-logo p {
+            color: var(--gray);
+            font-size: .92rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+            position: relative;
+            padding-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section h4::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 42px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(6px);
+        }
+
+        .newsletter-form {
+            margin-top: 12px;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.25);
+            color: var(--light);
+            font-size: .95rem;
+            transition: var(--transition);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255,255,255,.14);
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: var(--secondary);
+            color: var(--light);
+            font-weight: 900;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #b30000;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,.1);
+            padding-top: 18px;
+            color: var(--gray);
+            font-size: .9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav a {
+            color: var(--gray);
+            transition: var(--transition);
+            font-size: .85rem;
+            text-decoration: none;
+        }
+
+        .footer-nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Newsletter Message */
+        .newsletter-message {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .newsletter-message.success {
+            background: rgba(25,135,84,0.1);
+            color: #198754;
+            border: 1px solid rgba(25,135,84,0.2);
+        }
+
+        .newsletter-message.error {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220,53,69,0.2);
+        }
+
+        /* Responsividade */
+        @media (min-width: 768px) {
+            .logo-text h1 {
+                font-size: 28px;
+            }
+            
+            .filters-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .news-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header-content {
+                padding: 0 15px;
+            }
+            
+            .menu-sidebar {
+                width: 280px;
+            }
+            
+            .page-title {
+                font-size: 24px;
+                padding: 0 15px;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .date-range {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-actions {
+                flex-direction: column;
+            }
+            
+            .filter-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .sort-options {
+                width: 100%;
+            }
+            
+            .sort-select {
+                min-width: 100%;
+            }
+            
+            .copyright {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .logo-text h1 {
+                font-size: 20px;
+            }
+            
+            .menu-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .news-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar (PADRÃO PRETO) -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-left">
+                    <span class="date" id="currentDate"></span>
+                </div>
+                <div class="top-bar-right">
+                    <div class="social-icons">
+                        <a href="#" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="YouTube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container header-content">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><span class="number">4</span></div>
+                <div class="logo-text">
+                    <h1>QUARTO PODER NEWS</h1>
+                    <div class="tagline">O JORNAL QUE FAZ A DIFERENÇA</div>
+                </div>
+            </a>
+
+            <!-- Menu Hamburguer -->
+            <div class="hamburger-menu">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay do Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Menu Lateral -->
+    <div class="menu-sidebar" id="menuSidebar">
+        <div class="menu-header">
+            <div class="menu-logo">
+                <div class="menu-logo-icon"><span class="number">4</span></div>
+                <div class="menu-logo-text">
+                    <h3>QUARTO PODER NEWS</h3>
+                    <div class="sub">Menu Principal</div>
+                </div>
+            </div>
+            <button class="close-menu-btn" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Categorias do Menu -->
+        <ul class="menu-categories">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="todas-noticias.html" class="active">Todas as Notícias</a></li>
+            <li><a href="politica.html">Política</a></li>
+            <li><a href="economia.html">Economia</a></li>
+            <li><a href="esportes.html">Esportes</a></li>
+            <li><a href="cultura.html">Cultura</a></li>
+            <li><a href="tecnologia.html">Tecnologia</a></li>
+            <li><a href="saude.html">Saúde</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="contato.html">Contato</a></li>
+        </ul>
+
+        <!-- Destaques -->
+        <div class="menu-highlights">
+            <h4>Destaques</h4>
+            <div class="highlight-item">
+                <a href="noticia.html?id=1">Caiado se filia ao PSD e entra no tabuleiro presidencial de 2026</a>
+                <div class="highlight-date">28/01/2026</div>
+            </div>
+            <div class="highlight-item">
+                <a href="noticia.html?id=2">O fim do mito do nômade digital: economia por trás do declínio</a>
+                <div class="highlight-date">24/01/2026</div>
+            </div>
+            <div class="highlight-item">
+                <a href="noticia.html?id=3">Nikolas Ferreira consolida liderança conservadora</a>
+                <div class="highlight-date">22/01/2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Cabeçalho da Página -->
+            <div class="page-header">
+                <h1 class="page-title">Todas as Notícias</h1>
+                <p class="page-description">Explore nosso acervo completo de notícias, artigos e reportagens. Filtre por categoria, data ou utilize nossa busca avançada.</p>
+            </div>
+
+            <!-- Sistema de Filtros Avançados -->
+            <div class="filters-container">
+                <div class="filters-header">
+                    <h3 class="filters-title"><i class="fas fa-sliders-h"></i> Filtros Avançados</h3>
+                    <button class="btn btn-secondary btn-sm" id="clearFiltersBtn">
+                        <i class="fas fa-eraser"></i> Limpar Filtros
+                    </button>
+                </div>
+
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-tag"></i> Categoria</label>
+                        <select class="filter-select" id="filterCategory">
+                            <option value="">Todas as categorias</option>
+                            <option value="Política">Política</option>
+                            <option value="Economia">Economia</option>
+                            <option value="Esportes">Esportes</option>
+                            <option value="Cultura">Cultura</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-search"></i> Palavra-chave</label>
+                        <input type="text" class="filter-input" id="filterKeyword" placeholder="Digite uma palavra ou frase...">
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-calendar"></i> Data</label>
+                        <div class="date-range">
+                            <input type="date" class="filter-input" id="filterDateFrom" placeholder="De...">
+                            <input type="date" class="filter-input" id="filterDateTo" placeholder="Até...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" id="toggleFiltersBtn">
+                        <i class="fas fa-filter"></i> Filtros Avançados
+                    </button>
+                    <button class="btn btn-primary" id="applyFiltersBtn">
+                        <i class="fas fa-check"></i> Aplicar Filtros
+                    </button>
+                </div>
+
+                <!-- Filtros Avançados (Ocultos por padrão) -->
+                <div class="advanced-filters" id="advancedFilters">
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label class="filter-label"><i class="fas fa-user-edit"></i> Autor</label>
+                            <input type="text" class="filter-input" id="filterAuthor" placeholder="Nome do autor...">
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label"><i class="fas fa-star"></i> Status</label>
+                            <select class="filter-select" id="filterType">
+                                <option value="">Todas as notícias</option>
+                                <option value="destaque">Apenas destaques</option>
+                                <option value="recente">Mais recentes</option>
+                                <option value="popular">Mais populares</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label"><i class="fas fa-eye"></i> Visualizações mínimas</label>
+                            <select class="filter-select" id="filterViews">
+                                <option value="">Qualquer quantidade</option>
+                                <option value="100">Mais de 100</option>
+                                <option value="500">Mais de 500</option>
+                                <option value="1000">Mais de 1.000</option>
+                                <option value="5000">Mais de 5.000</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contador de Resultados e Ordenação -->
+            <div class="results-header">
+                <div class="results-count">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Mostrando <span class="count-number" id="resultsCount">0</span> notícias</span>
+                </div>
+                <div class="sort-options">
+                    <span class="sort-label">Ordenar por:</span>
+                    <select class="sort-select" id="sortBy">
+                        <option value="date-desc">Mais recentes primeiro</option>
+                        <option value="date-asc">Mais antigas primeiro</option>
+                        <option value="views-desc">Mais visualizadas</option>
+                        <option value="title-asc">A-Z (título)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid de Notícias -->
+            <div class="news-grid-container">
+                <div class="news-grid" id="newsGrid">
+                    <div class="loading" id="loadingNews">
+                        <i class="fas fa-spinner"></i> Carregando notícias...
+                    </div>
+                </div>
+
+                <!-- Mensagem de "Nenhum resultado" -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <h3>Nenhuma notícia encontrada</h3>
+                    <p>Não há notícias cadastradas no momento. Adicione notícias através do painel de administração.</p>
+                    <button class="btn btn-primary" id="resetFiltersBtn">
+                        <i class="fas fa-redo"></i> Limpar todos os filtros
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paginação -->
+            <div class="pagination-container">
+                <div class="pagination" id="pagination" style="display: none;"></div>
+                <div class="page-info" id="pageInfo"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer IGUAL CATEGORIAS.HTML -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon"><span class="number">4</span></div>
+                    <h3>QUARTO PODER NEWS</h3>
+                    <p>Jornalismo independente com compromisso com a verdade, integridade e impacto.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Editorias</h4>
+                    <ul class="footer-links">
+                        <li><a href="todas-noticias.html?categoria=Política">Política</a></li>
+                        <li><a href="todas-noticias.html?categoria=Economia">Economia</a></li>
+                        <li><a href="todas-noticias.html?categoria=Esportes">Esportes</a></li>
+                        <li><a href="todas-noticias.html?categoria=Cultura">Cultura</a></li>
+                        <li><a href="todas-noticias.html?categoria=Tecnologia">Tecnologia</a></li>
+                        <li><a href="todas-noticias.html?categoria=Saúde">Saúde</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Institucional</h4>
+                    <ul class="footer-links">
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="login.html">Área do Jornal</a></li>
+                        <li><a href="categorias.html">Categorias</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Inscreva-se</h4>
+                    <p>As principais notícias do dia, direto da redação do Quarto Poder News.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required />
+                        <button type="submit">INSCREVER</button>
+                    </form>
+                    <div class="newsletter-message" id="newsletterMessage"></div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2024-2026 Quarto Poder News. Todos os direitos reservados.</p>
+                <div class="footer-nav">
+                    <a href="termos.html">Termos de Uso</a>
+                    <a href="privacidade.html">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== API HELPER (mesma origem) ====================
+        async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
+            const res = await fetch(path, {
+                method,
+                credentials, // use "include" se estiver em domínio/porta diferente
+                headers: { "Content-Type": "application/json", ...headers },
+                body: body ? JSON.stringify(body) : undefined,
+            });
+
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data?.error || `Erro HTTP ${res.status}`);
+            return data;
+        }
+
+        const Public = {
+            noticias: (params = "") => api(`/api/public/noticias${params}`),
+            categorias: () => api("/api/public/categorias"),
+        };
+        // ==================== MENU DESTAQUES (sem estático) ====================
+        async function renderMenuDestaques() {
+            const menu = document.querySelector('.menu-highlights');
+            if (!menu) return;
+
+            let list = menu.querySelector('#menuHighlightsList');
+            if (!list) {
+                menu.querySelectorAll('.highlight-item').forEach(el => el.remove());
+                list = document.createElement('div');
+                list.id = 'menuHighlightsList';
+                menu.appendChild(list);
+            } else {
+                list.innerHTML = '';
+            }
+
+            try {
+                const data = await Public.destaques();
+                const itens = Array.isArray(data) ? data : (data?.destaques || []);
+                if (!itens.length) return;
+
+                itens.slice(0, 3).forEach(n => {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'highlight-item';
+
+                    const link = document.createElement('a');
+                    link.href = `noticia.html?id=${n.id}`;
+                    link.textContent = n.titulo || 'Sem título';
+
+                    const dt = document.createElement('div');
+                    dt.className = 'highlight-date';
+                    const rawDate = n.data_formatada || n.data_publicacao;
+                    dt.textContent = rawDate ? new Date(rawDate).toLocaleDateString('pt-BR') : '';
+
+                    wrap.appendChild(link);
+                    wrap.appendChild(dt);
+                    list.appendChild(wrap);
+                });
+            } catch (e) {
+                // fica zerado se não tiver API
+            }
+        }
+
+
+        // ==================== VARIÁVEIS GLOBAIS ====================
+        let todasNoticias = [];
+        let noticiasFiltradas = [];
+        let noticiasAtuais = [];
+        let paginaAtual = 1;
+        const noticiasPorPagina = 9;
+        let filtrosAtivos = {};
+
+        // ==================== FUNÇÕES UTILITÁRIAS ====================
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatNumber(num) {
+            if (!num) return '0';
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'k';
+            }
+            return num.toString();
+        }
+
+        // Função para obter imagem baseada na categoria
+        function getRandomImage(categoria) {
+            const images = {
+                'Política': 'https://images.unsplash.com/photo-1562602839-0d0e4d4c2b7d?auto=format&fit=crop&w=600&q=80',
+                'Economia': 'https://images.unsplash.com/photo-1580655653885-65763b2597d0?auto=format&fit=crop&w=600&q=80',
+                'Esportes': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80',
+                'Cultura': 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80',
+                'Tecnologia': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80',
+                'Saúde': 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80',
+                'Educação': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80'
+            };
+            return images[categoria] || 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=600&q=80';
+        }
+
+        // ==================== DATA E HORA ====================
+        function updateDateTime() {
+            const now = new Date();
+            const dateEl = document.getElementById('currentDate');
+            if (!dateEl) return;
+
+            const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+            dateEl.textContent = now.toLocaleDateString('pt-BR', options);
+        }
+
+        // ==================== MENU HAMBURGUER ====================
+        function initHamburgerMenu() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuSidebar = document.getElementById('menuSidebar');
+            const body = document.body;
+
+            // Abrir menu
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.add('active');
+                menuOverlay.classList.add('active');
+                menuSidebar.classList.add('active');
+                body.style.overflow = 'hidden';
+            });
+
+            // Fechar menu
+            function closeMenu() {
+                hamburgerBtn.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                menuSidebar.classList.remove('active');
+                body.style.overflow = '';
+            }
+
+            // Eventos para fechar menu
+            closeMenuBtn.addEventListener('click', closeMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+
+            // Fechar menu com tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && menuSidebar.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+
+            // Fechar menu ao clicar em um link
+            document.querySelectorAll('.menu-categories a').forEach(link => {
+                link.addEventListener('click', () => {
+                    setTimeout(closeMenu, 300);
+                });
+            });
+
+            // Fechar menu ao redimensionar para desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && menuSidebar.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+        }
+
+        // ==================== CARREGAR NOTÍCIAS ====================
+        function carregarNoticias() {
+            const loadingNews = document.getElementById('loadingNews');
+            const errorContainer = document.getElementById('errorContainer');
+
+            if (loadingNews) loadingNews.style.display = 'block';
+            if (errorContainer) errorContainer.style.display = 'none';
+
+            (async () => {
+                try {
+                    // 1) Descobrir categoria inicial pela URL (todas-noticias.html?categoria=Política)
+                    const params = new URLSearchParams(window.location.search);
+                    const categoria = params.get('categoria');
+
+                    // 2) Buscar notícias publicadas via API pública
+                    //    Pegamos um "lote grande" e filtramos/paginamos no frontend (mais simples e funciona bem).
+                    const qs = new URLSearchParams();
+                    qs.set('limit', '200');
+                    qs.set('offset', '0');
+                    if (categoria) qs.set('categoria', categoria);
+
+                    const result = await Public.noticias(`?${qs.toString()}`);
+                    todasNoticias = Array.isArray(result?.noticias) ? result.noticias : [];
+
+                    // 3) Preencher select de categorias via API (pra bater com o banco)
+                    await preencherCategoriasFiltro(categoria);
+
+                    // 4) Aplicar filtros (inclui categoria inicial)
+                    filtrosAtivos.categoria = categoria || '';
+                    aplicarFiltros();
+
+                } catch (err) {
+                    console.error('Erro ao carregar notícias:', err);
+                    if (errorContainer) {
+                        errorContainer.textContent = err?.message || 'Erro ao carregar notícias.';
+                        errorContainer.style.display = 'block';
+                    }
+                } finally {
+                    if (loadingNews) loadingNews.style.display = 'none';
+                }
+            })();
+        }
+
+        async function preencherCategoriasFiltro(categoriaSelecionada = '') {
+            const select = document.getElementById('filterCategory');
+            if (!select) return;
+
+            // Manter a opção padrão
+            const keepFirst = select.querySelector('option[value=""]')?.outerHTML || '<option value="">Todas as categorias</option>';
+            select.innerHTML = keepFirst;
+
+            try {
+                const result = await Public.categorias();
+                const cats = Array.isArray(result?.categorias) ? result.categorias : [];
+                cats.forEach((c) => {
+                    if (!c?.nome) return;
+                    const opt = document.createElement('option');
+                    opt.value = c.nome;
+                    opt.textContent = c.nome;
+                    if (categoriaSelecionada && c.nome === categoriaSelecionada) opt.selected = true;
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                // Se falhar, deixa o select como está (sem quebrar a página)
+                console.warn('Não foi possível carregar categorias:', e);
+            }
+        }
+
+// ==================== PROCESSAR PARÂMETROS DA URL ====================
+        function processarParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Categoria
+            const categoria = urlParams.get('categoria');
+            if (categoria) {
+                document.getElementById('filterCategory').value = categoria;
+            }
+            
+            // Palavra-chave
+            const keyword = urlParams.get('q');
+            if (keyword) {
+                document.getElementById('filterKeyword').value = keyword;
+            }
+            
+            // Data
+            const data = urlParams.get('data');
+            if (data) {
+                document.getElementById('filterDateFrom').value = data;
+            }
+        }
+
+        // ==================== FILTRAR NOTÍCIAS ====================
+        function aplicarFiltros() {
+            // Coletar valores dos filtros
+            filtrosAtivos = {
+                categoria: document.getElementById('filterCategory').value,
+                keyword: document.getElementById('filterKeyword').value.toLowerCase(),
+                dataFrom: document.getElementById('filterDateFrom').value,
+                dataTo: document.getElementById('filterDateTo').value,
+                autor: document.getElementById('filterAuthor').value.toLowerCase(),
+                tipo: document.getElementById('filterType').value,
+                views: document.getElementById('filterViews').value,
+                sortBy: document.getElementById('sortBy').value
+            };
+            
+            // Aplicar filtros
+            noticiasFiltradas = todasNoticias.filter(noticia => {
+                // Filtrar por categoria
+                if (filtrosAtivos.categoria && noticia.categoria !== filtrosAtivos.categoria) {
+                    return false;
+                }
+                
+                // Filtrar por palavra-chave
+                if (filtrosAtivos.keyword) {
+                    const textoBusca = `${noticia.titulo} ${noticia.resumo} ${noticia.autor} ${noticia.categoria}`.toLowerCase();
+                    if (!textoBusca.includes(filtrosAtivos.keyword)) {
+                        return false;
+                    }
+                }
+                
+                // Filtrar por autor
+                if (filtrosAtivos.autor && !noticia.autor.toLowerCase().includes(filtrosAtivos.autor)) {
+                    return false;
+                }
+                
+                // Filtrar por data
+                if (filtrosAtivos.dataFrom && noticia.data < filtrosAtivos.dataFrom) {
+                    return false;
+                }
+                if (filtrosAtivos.dataTo && noticia.data > filtrosAtivos.dataTo) {
+                    return false;
+                }
+                
+                // Filtrar por tipo
+                if (filtrosAtivos.tipo === 'destaque' && !noticia.destaque) {
+                    return false;
+                }
+                
+                // Filtrar por visualizações
+                if (filtrosAtivos.views && noticia.visualizacoes < parseInt(filtrosAtivos.views)) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Ordenar resultados
+            ordenarNoticias(noticiasFiltradas, filtrosAtivos.sortBy);
+            
+            // Atualizar contador
+            atualizarContadorResultados();
+            
+            // Mostrar resultados
+            mostrarNoticiasPagina(1);
+            
+            // Atualizar URL com parâmetros ativos
+            atualizarURL();
+        }
+
+        // ==================== ORDENAR NOTÍCIAS ====================
+        function ordenarNoticias(noticias, ordenacao) {
+            return noticias.sort((a, b) => {
+                switch (ordenacao) {
+                    case 'date-desc':
+                        return new Date(b.data) - new Date(a.data);
+                    case 'date-asc':
+                        return new Date(a.data) - new Date(b.data);
+                    case 'views-desc':
+                        return b.visualizacoes - a.visualizacoes;
+                    case 'title-asc':
+                        return a.titulo.localeCompare(b.titulo);
+                    default:
+                        return new Date(b.data) - new Date(a.data);
+                }
+            });
+        }
+
+        // ==================== ATUALIZAR CONTADOR ====================
+        function atualizarContadorResultados() {
+            const countElement = document.getElementById('resultsCount');
+            const emptyState = document.getElementById('emptyState');
+            const pagination = document.getElementById('pagination');
+            
+            const total = noticiasFiltradas.length;
+            
+            if (total === 0) {
+                countElement.textContent = '0';
+                emptyState.style.display = 'block';
+                pagination.style.display = 'none';
+            } else {
+                countElement.textContent = total;
+                emptyState.style.display = 'none';
+                pagination.style.display = 'flex';
+            }
+        }
+
+        // ==================== MOSTRAR NOTÍCIAS POR PÁGINA ====================
+        function mostrarNoticiasPagina(pagina) {
+            paginaAtual = pagina;
+            const newsGrid = document.getElementById('newsGrid');
+            
+            // Calcular índices da página
+            const inicio = (pagina - 1) * noticiasPorPagina;
+            const fim = inicio + noticiasPorPagina;
+            noticiasAtuais = noticiasFiltradas.slice(inicio, fim);
+            
+            // Limpar grid
+            newsGrid.innerHTML = '';
+            
+            // Adicionar notícias da página atual
+            noticiasAtuais.forEach((noticia, index) => {
+                const newsCard = document.createElement('a');
+                newsCard.href = `noticia.html?id=${noticia.id}`;
+                newsCard.className = 'news-card';
+                newsCard.style.animationDelay = `${index * 0.1}s`;
+                
+                const dataFormatada = formatDate(noticia.data);
+                const visualizacoesFormatadas = formatNumber(noticia.visualizacoes);
+                
+                newsCard.innerHTML = `
+                    <div class="news-image">
+                        <img src="${(noticia.imagem_url || noticia.imagem || getRandomImage(noticia.categoria))}" alt="${noticia.titulo}" loading="lazy" onerror="this.onerror=null;this.src='${getRandomImage(noticia.categoria)}';">
+                        ${noticia.destaque ? '<div class="news-destaque">Destaque</div>' : ''}
+                        <div class="news-category">${escapeHtml(noticia.categoria)}</div>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">${escapeHtml(noticia.titulo)}</h3>
+                        <p class="news-excerpt">${escapeHtml(noticia.resumo)}</p>
+                        <div class="news-meta">
+                            <div class="news-meta-left">
+                                <div class="meta-item">
+                                    <i class="fas fa-user-edit"></i>
+                                    <span>${escapeHtml(noticia.autor)}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="far fa-calendar"></i>
+                                    <span>${dataFormatada}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>${visualizacoesFormatadas}</span>
+                                </div>
+                            </div>
+                            <span class="read-more">Ler mais <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                `;
+                
+                newsGrid.appendChild(newsCard);
+            });
+            
+            // Atualizar paginação
+            atualizarPaginacao();
+        }
+
+        // ==================== ATUALIZAR PAGINAÇÃO ====================
+        function atualizarPaginacao() {
+            const pagination = document.getElementById('pagination');
+            const pageInfo = document.getElementById('pageInfo');
+            const totalPages = Math.ceil(noticiasFiltradas.length / noticiasPorPagina);
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                pageInfo.textContent = '';
+                return;
+            }
+            
+            pagination.style.display = 'flex';
+            
+            // Calcular informações da página
+            const inicio = (paginaAtual - 1) * noticiasPorPagina + 1;
+            const fim = Math.min(paginaAtual * noticiasPorPagina, noticiasFiltradas.length);
+            pageInfo.textContent = `Mostrando ${inicio}-${fim} de ${noticiasFiltradas.length} notícias`;
+            
+            // Limpar paginação anterior
+            pagination.innerHTML = '';
+            
+            // Botão Anterior
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.disabled = paginaAtual === 1;
+            prevBtn.addEventListener('click', () => mostrarNoticiasPagina(paginaAtual - 1));
+            pagination.appendChild(prevBtn);
+            
+            // Páginas numéricas
+            const maxPagesToShow = 5;
+            let startPage = Math.max(1, paginaAtual - Math.floor(maxPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+            
+            // Ajustar se estiver no final
+            if (endPage - startPage + 1 < maxPagesToShow) {
+                startPage = Math.max(1, endPage - maxPagesToShow + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-btn ${i === paginaAtual ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => mostrarNoticiasPagina(i));
+                pagination.appendChild(pageBtn);
+            }
+            
+            // Botão Próximo
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.disabled = paginaAtual === totalPages;
+            nextBtn.addEventListener('click', () => mostrarNoticiasPagina(paginaAtual + 1));
+            pagination.appendChild(nextBtn);
+        }
+
+        // ==================== ATUALIZAR URL ====================
+        function atualizarURL() {
+            const params = new URLSearchParams();
+            
+            if (filtrosAtivos.categoria) {
+                params.set('categoria', filtrosAtivos.categoria);
+            }
+            
+            if (filtrosAtivos.keyword) {
+                params.set('q', filtrosAtivos.keyword);
+            }
+            
+            if (filtrosAtivos.dataFrom) {
+                params.set('de', filtrosAtivos.dataFrom);
+            }
+            
+            const novaURL = params.toString() ? `todas-noticias.html?${params.toString()}` : 'todas-noticias.html';
+            
+            // Atualizar URL sem recarregar a página
+            window.history.replaceState({}, '', novaURL);
+        }
+
+        // ==================== LIMPAR FILTROS ====================
+        function limparFiltros() {
+            document.getElementById('filterCategory').value = '';
+            document.getElementById('filterKeyword').value = '';
+            document.getElementById('filterDateFrom').value = '';
+            document.getElementById('filterDateTo').value = '';
+            document.getElementById('filterAuthor').value = '';
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterViews').value = '';
+            document.getElementById('sortBy').value = 'date-desc';
+            
+            // Ocultar filtros avançados se estiverem visíveis
+            const advancedFilters = document.getElementById('advancedFilters');
+            advancedFilters.classList.remove('active');
+            
+            aplicarFiltros();
+        }
+
+        // ==================== NEWSLETTER ====================
+        function initNewsletter() {
+            const newsletterForm = document.getElementById('newsletterForm');
+            const newsletterMessage = document.getElementById('newsletterMessage');
+            if (!newsletterForm || !newsletterMessage) return;
+
+            newsletterForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const emailInput = document.getElementById('newsletterEmail');
+                const email = (emailInput?.value || "").trim();
+
+                const showMessage = (text, type = 'success') => {
+                    newsletterMessage.textContent = text;
+                    newsletterMessage.className = `newsletter-message ${type}`;
+                    newsletterMessage.style.display = 'block';
+                    if (type === 'success') setTimeout(() => (newsletterMessage.style.display = 'none'), 5000);
+                };
+
+                if (!email || !email.includes('@')) {
+                    showMessage('Por favor, insira um e-mail válido.', 'error');
+                    return;
+                }
+
+                showMessage('Processando inscrição...', '');
+
+                try {
+                    const result = await api('/api/newsletter/inscrever', { method: 'POST', body: { email } });
+                    if (result.success) {
+                        showMessage(result.message || '🎉 Inscrição realizada! Verifique seu e-mail para confirmar.', 'success');
+                        newsletterForm.reset();
+                    } else {
+                        showMessage(result.error || 'Erro ao processar inscrição.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Erro na inscrição:', error);
+                    showMessage(error?.message || 'Erro ao processar inscrição. Tente novamente.', 'error');
+                }
+            });
+        }
+
+        // ==================== ATUALIZAÇÃO AUTOMÁTICA ====================
+        function verificarAtualizacoes() {
+            // Recarrega a cada 60s para refletir novas publicações (sem depender de localStorage)
+            setInterval(() => {
+                carregarNoticias();
+            }, 60000);
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data e hora
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
+            
+            // Menu hamburguer
+            initHamburgerMenu();
+            
+            // Newsletter
+            initNewsletter();
+            
+            // Carregar notícias
+            carregarNoticias();
+            
+            // Iniciar verificação de atualizações
+            verificarAtualizacoes();
+            
+            // Event listeners para filtros
+            document.getElementById('applyFiltersBtn').addEventListener('click', aplicarFiltros);
+            document.getElementById('clearFiltersBtn').addEventListener('click', limparFiltros);
+            document.getElementById('resetFiltersBtn').addEventListener('click', limparFiltros);
+            
+            // Mostrar/ocultar filtros avançados
+            document.getElementById('toggleFiltersBtn').addEventListener('click', function() {
+                const advancedFilters = document.getElementById('advancedFilters');
+                advancedFilters.classList.toggle('active');
+                this.innerHTML = advancedFilters.classList.contains('active') 
+                    ? '<i class="fas fa-filter"></i> Menos Opções' 
+                    : '<i class="fas fa-filter"></i> Filtros Avançados';
+            });
+            
+            // Ordenação
+            document.getElementById('sortBy').addEventListener('change', aplicarFiltros);
+            
+            // Aplicar filtros ao pressionar Enter nos campos de texto
+            document.getElementById('filterKeyword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    aplicarFiltros();
+                }
+            });
+            
+            document.getElementById('filterAuthor').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    aplicarFiltros();
+                }
+            });
+            
+            // Aplicar filtros quando datas são alteradas
+            document.getElementById('filterDateFrom').addEventListener('change', aplicarFiltros);
+            document.getElementById('filterDateTo').addEventListener('change', aplicarFiltros);
+        });
+    </script>
+</body>
+</html>
+<script>renderMenuDestaques();</script>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quarto Poder News - Inscritos da Newsletter</title>
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       CSS DO QUARTO PODER NEWS - PADRÃO (admin.html / usuarios.html)
+       ============================================ */
+    :root {
+      --primary: #0A0A0A;
+      --secondary: #D50000;
+      --accent: #003366;
+      --light: #FFFFFF;
+      --gray-light: #F8F9FA;
+      --gray: #6C757D;
+      --gray-dark: #212529;
+      --border: 1px solid #E9ECEF;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --shadow-hover: 0 15px 40px rgba(0,0,0,.12);
+      --transition: all .35s cubic-bezier(.175,.885,.32,1.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--gray-light);
+      color: var(--gray-dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+    a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 3px solid rgba(213,0,0,.3); outline-offset: 3px; }
+
+    /* ============================================
+       HEADER ADMIN
+       ============================================ */
+    .admin-header {
+      background: var(--primary);
+      color: var(--light);
+      padding: 15px 0;
+      border-bottom: 5px solid var(--secondary);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 5px 20px rgba(0,0,0,.2);
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .admin-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: inherit;
+      transition: var(--transition);
+      min-width: 0;
+    }
+
+    .admin-logo:hover { transform: translateY(-2px); }
+
+    .admin-logo-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--light);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,.2);
+    }
+
+    .admin-logo-icon .number { color: var(--secondary); }
+
+    .admin-logo-text h1 {
+      font-size: 1.6rem;
+      color: var(--light);
+      margin-bottom: 4px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 60vw;
+    }
+
+    .admin-logo-text p {
+      color: rgba(255,255,255,.8);
+      font-size: .85rem;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .admin-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,.1);
+      padding: 10px 20px;
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.2);
+      min-width: 0;
+    }
+
+    .user-avatar-mini {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .user-card span {
+      font-weight: 600;
+      font-size: .95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 46vw;
+    }
+
+    .logout-btn {
+      background: var(--secondary);
+      color: var(--light);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: .5px;
+      font-size: .9rem;
+      border: 2px solid var(--secondary);
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      background: transparent;
+      color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(213,0,0,.3);
+    }
+
+    /* ============================================
+       LAYOUT PRINCIPAL
+       ============================================ */
+    .admin-container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 30px;
+      min-height: calc(100vh - 120px);
+    }
+
+    /* ============================================
+       SIDEBAR
+       ============================================ */
+    .admin-sidebar {
+      background: var(--light);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: var(--border);
+      padding: 25px;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    .sidebar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 25px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--accent);
+      position: relative;
+    }
+
+    .sidebar-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 50px;
+      height: 3px;
+      background: var(--secondary);
+    }
+
+    .admin-menu { list-style: none; margin-bottom: 20px; }
+    .admin-menu li { margin-bottom: 10px; }
+
+    .admin-menu a {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 20px;
+      color: var(--gray-dark);
+      border-radius: 12px;
+      transition: var(--transition);
+      font-weight: 600;
+      border: 2px solid transparent;
+    }
+
+    .admin-menu a:hover {
+      background: rgba(213,0,0,.08);
+      color: var(--secondary);
+      transform: translateX(5px);
+      border-color: rgba(213,0,0,.2);
+    }
+
+    .admin-menu a.active {
+      background: var(--secondary);
+      color: var(--light);
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(213,0,0,.2);
+    }
+
+    .admin-menu a i { width: 20px; font-size: 1.1rem; }
+
+    /* ============================================
+       CONTEÚDO PRINCIPAL
+       ============================================ */
+    .admin-main {
+      background: var(--light);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: var(--border);
+      padding: 30px;
+      animation: fadeIn 0.6s ease;
+      overflow: hidden;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+      margin-bottom: 25px;
+      padding-bottom: 18px;
+      border-bottom: var(--border);
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .page-title i { color: var(--secondary); }
+
+    .page-subtitle {
+      color: var(--gray);
+      font-size: 1rem;
+      max-width: 750px;
+    }
+
+    /* ============================================
+       MENSAGENS
+       ============================================ */
+    .message {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      font-weight: 600;
+      display: none;
+      animation: fadeIn 0.5s ease;
+      border: 2px solid transparent;
+      font-size: 0.95rem;
+    }
+
+    .message.success { background: rgba(46, 204, 113, 0.1); color: #27ae60; border-color: rgba(46, 204, 113, 0.2); }
+    .message.error { background: rgba(231, 76, 60, 0.1); color: #c0392b; border-color: rgba(231, 76, 60, 0.2); }
+    .message.info { background: rgba(52, 152, 219, 0.1); color: #2980b9; border-color: rgba(52, 152, 219, 0.2); }
+    .message i { margin-right: 10px; font-size: 1.1rem; }
+
+    /* ============================================
+       FILTROS / TOOLBAR
+       ============================================ */
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20px 0 18px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 100%;
+    }
+
+    .form-input, .form-select {
+      width: auto;
+      padding: 14px 18px;
+      border: var(--border);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: var(--light);
+      color: var(--gray-dark);
+      font-family: 'Inter', sans-serif;
+      min-height: 48px;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(213,0,0,.15);
+    }
+
+    .search-wrap { flex: 1; min-width: 0; display: flex; gap: 10px; }
+    .search-wrap .form-input { flex: 1; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+      border: 2px solid transparent;
+      letter-spacing: .5px;
+      font-family: 'Inter', sans-serif;
+      min-height: 48px;
+    }
+
+    .btn:active { transform: scale(.98); }
+
+    .btn-primary { background: var(--secondary); color: var(--light); border-color: var(--secondary); }
+    .btn-primary:hover:not(:disabled) { background: transparent; color: var(--secondary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(213,0,0,.2); }
+
+    .btn-secondary { background: var(--gray-light); color: var(--gray-dark); border-color: var(--gray-light); }
+    .btn-secondary:hover { background: var(--gray); color: var(--light); transform: translateY(-2px); border-color: var(--gray); }
+
+    .btn:disabled { opacity: .6; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+    .btn-sm { padding: 12px 16px; font-size: .95rem; min-height: 44px; }
+
+    .toolbar-right {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    /* ============================================
+       LISTA EM CARDS (igual usuários)
+       ============================================ */
+    .subs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 12px;
+    }
+
+    .subs-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+    }
+
+    .subs-header h3 i { color: var(--secondary); }
+
+    .meta-line {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    .subscriber-item {
+      background: var(--light);
+      border-radius: 12px;
+      border: var(--border);
+      padding: 22px;
+      margin-bottom: 16px;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .subscriber-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--secondary);
+    }
+
+    .subscriber-info { flex: 1; min-width: 0; }
+
+    .subscriber-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .subscriber-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .subscriber-details h4 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .subscriber-email {
+      color: var(--gray);
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      word-break: break-all;
+      margin-bottom: 10px;
+    }
+    .subscriber-email i { color: var(--secondary); }
+
+    .subscriber-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 10px 0 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .85rem;
+      border: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .pill.status-ativo { background: rgba(39,174,96,.1); color: #27ae60; border-color: rgba(39,174,96,.3); }
+    .pill.status-inativo { background: rgba(241,196,15,.1); color: #f39c12; border-color: rgba(241,196,15,.3); }
+    .pill.status-cancelado { background: rgba(231,76,60,.1); color: #c0392b; border-color: rgba(231,76,60,.25); }
+    .pill.status-outro { background: rgba(108,117,125,.1); color: var(--gray); border-color: rgba(108,117,125,.25); }
+
+    .subscriber-stats {
+      color: var(--gray);
+      font-size: .9rem;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .subscriber-stats span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subscriber-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .subscriber-actions .btn { font-weight: 800; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
+
+    /* ============================================
+       PAGINAÇÃO
+       ============================================ */
+    .pager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .pager-left { color: var(--gray); font-size: .95rem; }
+    .pager-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .pager-controls .btn { min-height: 44px; }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 30px;
+      color: var(--gray);
+    }
+
+    .empty-state i {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      opacity: .3;
+    }
+
+    .empty-state h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .empty-state p {
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       RESPONSIVIDADE (mobile-first + igual padrões)
+       ============================================ */
+    @media (max-width: 1024px) {
+      .admin-container { grid-template-columns: 1fr; gap: 20px; }
+      .admin-sidebar { position: relative; top: 0; }
+    }
+
+    @media (max-width: 980px) {
+      .admin-container { grid-template-columns: 1fr !important; gap: 14px !important; }
+      .admin-sidebar { position: static !important; top: auto !important; }
+      .admin-menu { display: flex !important; flex-wrap: wrap !important; gap: 10px !important; }
+      .admin-menu li { margin: 0 !important; }
+      .admin-menu a { flex: 1 1 160px !important; justify-content: center !important; text-align: center !important; }
+      .subscriber-item { flex-direction: column; }
+      .subscriber-actions { width: 100%; justify-content: flex-start; min-width: 0; }
+      .subscriber-actions .btn { flex: 1; min-width: 160px; }
+    }
+
+    @media (max-width: 768px) {
+      .header-container { flex-direction: column; text-align: center; gap: 15px; }
+      .admin-user-info { justify-content: center; width: 100%; }
+      .admin-main, .admin-sidebar { padding: 20px; }
+      .toolbar { gap: 10px; }
+      .filters { flex-direction: column; align-items: stretch; }
+      .search-wrap { width: 100%; min-width: 0; }
+      .toolbar-right { width: 100%; justify-content: stretch; }
+      .toolbar-right .btn { width: 100%; }
+      .form-select { width: 100%; }
+      .subscriber-actions .btn { width: 100%; min-width: 0; }
+      .pager-controls { width: 100%; }
+      .pager-controls .btn { width: 100%; }
+    }
+
+    @media (max-width: 560px) {
+      .admin-menu a { flex: 1 1 100% !important; }
+      .admin-container { padding: 0 14px; margin: 18px auto; }
+      .header-container { padding: 0 14px; }
+      .subscriber-item { padding: 18px; }
+      .subscriber-avatar { width: 54px; height: 54px; font-size: 1.4rem; }
+      .page-title { font-size: 1.8rem; }
+    }
+
+    /* Melhorar toque */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, button { min-height: 44px !important; }
+      .form-input, .form-select { font-size: 16px !important; min-height: 44px !important; }
+      .admin-menu a { padding: 18px 20px !important; }
+    }
+  
+    /* ============================================
+       RESPONSIVIDADE EXTRA (todos os dispositivos)
+       ============================================ */
+
+    /* Evitar "zoom" no iOS ao focar inputs */
+    input, select, button, textarea { font-size: 16px; }
+
+    /* Header: permitir quebra em telas bem pequenas */
+    .admin-logo-text h1 { max-width: 100%; }
+    @media (max-width: 420px) {
+      .admin-logo-text h1 { white-space: normal; }
+      .admin-logo-text p { white-space: normal; }
+      .admin-logo-icon { width: 48px; height: 48px; font-size: 1.8rem; }
+    }
+
+    /* Toolbar: sempre fluidos */
+    .search-wrap { min-width: 0; }
+    .form-input, .form-select { width: 100%; }
+
+    /* Cards: ações sempre quebram bem */
+    .subscriber-actions { min-width: 0; width: 100%; justify-content: stretch; }
+    .subscriber-actions .btn { flex: 1 1 220px; }
+
+    /* Ajuste para telas muito pequenas */
+    @media (max-width: 360px) {
+      .admin-main, .admin-sidebar { padding: 16px; }
+      .subscriber-item { padding: 14px; }
+      .page-title { font-size: 1.6rem; }
+      .subscriber-avatar { width: 48px; height: 48px; font-size: 1.25rem; }
+      .subscriber-details h4 { font-size: 1.05rem; }
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="header-container">
+      <a href="#" class="admin-logo" target="_blank" rel="noopener">
+        <div class="admin-logo-icon"><span class="number">4</span></div>
+        <div class="admin-logo-text">
+          <h1>QUARTO PODER NEWS</h1>
+          <p>PAINEL ADMINISTRATIVO</p>
+        </div>
+      </a>
+
+      <div class="admin-user-info">
+        <div class="user-card" id="userInfo">
+          <div class="user-avatar-mini">AD</div>
+          <span id="userName">Carregando...</span>
+        </div>
+        <button class="logout-btn" id="logoutBtn" type="button">
+          <i class="fas fa-sign-out-alt"></i> SAIR
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <h2 class="sidebar-title">Menu Admin</h2>
+
+      <ul class="admin-menu">
+        <li>
+          <a href="admin.html" id="menuNoticias">
+            <i class="fas fa-newspaper"></i> Gerenciar Notícias
+          </a>
+        </li>
+        <li>
+          <a href="usuarios.html" id="menuUsuarios">
+            <i class="fas fa-users"></i> Usuários
+          </a>
+        </li>
+        <li>
+          <a href="inscritos.html" class="active" id="menuInscritos">
+            <i class="fas fa-envelope-open-text"></i> Inscritos
+          </a>
+        </li>
+        <li>
+          <a href="index.html" target="_blank" rel="noopener">
+            <i class="fas fa-external-link-alt"></i> Ver Site
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Content -->
+    <main class="admin-main">
+      <div id="message" class="message"></div>
+
+      <div class="page-header">
+        <h2 class="page-title"><i class="fas fa-envelope-open-text"></i> Inscritos da Newsletter</h2>
+        <p class="page-subtitle">
+          Consulte e pesquise inscritos da newsletter. O campo <strong>Confirmado</strong> foi removido (não aparece mais na lista nem nos filtros).
+        </p>
+      </div>
+
+      <div class="toolbar" aria-label="Filtros e ações">
+        <div class="filters">
+          <div class="search-wrap">
+            <input class="form-input" id="q" placeholder="Buscar por nome ou e-mail..." autocomplete="off" />
+            <button class="btn btn-secondary btn-sm" id="btnLimpar" type="button" title="Limpar busca e filtros">
+              <i class="fas fa-eraser"></i> Limpar
+            </button>
+          </div>
+
+          <select class="form-select" id="status" aria-label="Filtrar por status">
+            <option value="">Status: todos</option>
+            <option value="ativo">ativo</option>
+            <option value="inativo">inativo</option>
+            <option value="cancelado">cancelado</option>
+          </select>
+
+          <select class="form-select" id="sort" aria-label="Ordenação">
+            <option value="criado_desc">Ordenar: mais recentes</option>
+            <option value="criado_asc">Ordenar: mais antigos</option>
+            <option value="nome_asc">Ordenar: nome (A-Z)</option>
+            <option value="nome_desc">Ordenar: nome (Z-A)</option>
+            <option value="envios_desc">Ordenar: envios (maior)</option>
+            <option value="envios_asc">Ordenar: envios (menor)</option>
+          </select>
+
+          <select class="form-select" id="limit" aria-label="Quantidade por página">
+            <option value="20">20 por página</option>
+            <option value="50" selected>50 por página</option>
+            <option value="100">100 por página</option>
+          </select>
+
+          <div class="toolbar-right">
+            <button class="btn btn-primary btn-sm" id="btnAtualizar" type="button">
+              <i class="fas fa-rotate"></i> Atualizar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="subs-header">
+        <h3><i class="fas fa-users"></i> Lista</h3>
+        <div class="meta-line" id="totalInfo">—</div>
+      </div>
+
+      <div id="listaInscritos" aria-live="polite">
+        <div class="empty-state">
+          <i class="fas fa-spinner fa-spin"></i>
+          <h3>Carregando inscritos...</h3>
+          <p>Aguarde enquanto buscamos os dados no servidor.</p>
+        </div>
+      </div>
+
+      <div class="pager" aria-label="Paginação">
+        <div class="pager-left">
+          Página <strong id="page">1</strong>
+        </div>
+        <div class="pager-controls">
+          <button class="btn btn-secondary btn-sm" id="prev" type="button">
+            <i class="fas fa-chevron-left"></i> Anterior
+          </button>
+          <button class="btn btn-secondary btn-sm" id="next" type="button">
+            Próxima <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ============ API HELPER ============
+    async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
+      const res = await fetch(path, {
+        method,
+        credentials,
+        headers: { "Content-Type": "application/json", ...headers },
+        body: body ? JSON.stringify(body) : undefined
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        let errorData;
+        try { errorData = JSON.parse(errorText); }
+        catch { errorData = { error: `Erro HTTP ${res.status}: ${errorText}` }; }
+        throw new Error(errorData.error || errorData.message || `Erro HTTP ${res.status}`);
+      }
+
+      return await res.json();
+    }
+
+    // ============ UI HELPERS ============
+    function showMessage(text, type = "info") {
+      const el = document.getElementById("message");
+      if (!el) return;
+
+      const icon = type === "success" ? "check-circle" :
+                   type === "error" ? "exclamation-triangle" :
+                   type === "warning" ? "exclamation-circle" : "info-circle";
+
+      el.innerHTML = `<i class="fas fa-${icon}"></i> ${text}`;
+      el.className = `message ${type}`;
+      el.style.display = "block";
+
+      if (type === "success" || type === "info") {
+        setTimeout(() => { el.style.display = "none"; }, 3500);
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function initialsFromNameOrEmail(nome, email) {
+      const base = (nome || "").trim() || (email || "").trim() || "U";
+      const parts = base.split(/\s+/).filter(Boolean);
+      const ini = parts.length >= 2 ? (parts[0][0] + parts[1][0]) : base.slice(0, 2);
+      return ini.toUpperCase();
+    }
+
+    function fmtDate(s) {
+      if (!s) return "—";
+      const iso = String(s).includes("T") ? String(s) : String(s).replace(" ", "T");
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return s;
+      return d.toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+    }
+
+    function statusClass(status) {
+      const st = String(status || "").toLowerCase();
+      if (st === "ativo") return "status-ativo";
+      if (st === "inativo") return "status-inativo";
+      if (st === "cancelado") return "status-cancelado";
+      return "status-outro";
+    }
+
+    function sortClient(list, sortKey) {
+      const arr = Array.isArray(list) ? [...list] : [];
+      const key = sortKey || "criado_desc";
+
+      const getNome = (x) => String(x?.nome || "").toLowerCase();
+      const getCriado = (x) => new Date(String(x?.criado_em || "").includes("T") ? x.criado_em : String(x?.criado_em || "").replace(" ", "T")).getTime() || 0;
+      const getEnvios = (x) => Number(x?.total_envios ?? 0) || 0;
+
+      arr.sort((a, b) => {
+        if (key === "criado_desc") return getCriado(b) - getCriado(a);
+        if (key === "criado_asc") return getCriado(a) - getCriado(b);
+        if (key === "nome_asc") return getNome(a).localeCompare(getNome(b));
+        if (key === "nome_desc") return getNome(b).localeCompare(getNome(a));
+        if (key === "envios_desc") return getEnvios(b) - getEnvios(a);
+        if (key === "envios_asc") return getEnvios(a) - getEnvios(b);
+        return 0;
+      });
+
+      return arr;
+    }
+
+    function renderCard(i) {
+      const ini = initialsFromNameOrEmail(i?.nome, i?.email);
+      const nome = (i?.nome || "").trim() || "—";
+      const email = (i?.email || "").trim() || "—";
+      const status = (i?.status || "").trim() || "—";
+      const totalEnvios = (i?.total_envios ?? 0);
+
+      return `
+        <div class="subscriber-item" data-id="${escapeHtml(i?.id ?? "")}">
+          <div class="subscriber-info">
+            <div class="subscriber-header">
+              <div class="subscriber-avatar" aria-hidden="true">${escapeHtml(ini)}</div>
+              <div class="subscriber-details">
+                <h4>
+                  ${escapeHtml(nome)}
+                  <span class="mono" style="font-size:.9rem;color:var(--gray);font-weight:700;">#${escapeHtml(i?.id ?? "")}</span>
+                </h4>
+
+                <div class="subscriber-email">
+                  <i class="fas fa-envelope"></i>
+                  <span class="mono">${escapeHtml(email)}</span>
+                </div>
+
+                <div class="subscriber-badges">
+                  <span class="pill ${statusClass(status)}">
+                    <i class="fas fa-circle"></i> ${escapeHtml(status)}
+                  </span>
+                </div>
+
+                <div class="subscriber-stats">
+                  <span><i class="far fa-calendar"></i> Criado em: <span class="mono">${escapeHtml(fmtDate(i?.criado_em))}</span></span>
+                  <span><i class="fas fa-paper-plane"></i> Envios: <span class="mono">${escapeHtml(totalEnvios)}</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subscriber-actions">
+            <button class="btn btn-secondary btn-sm" type="button" data-action="copy-email" data-email="${escapeHtml(email)}" title="Copiar e-mail">
+              <i class="fas fa-copy"></i> Copiar e-mail
+            </button>
+</div>
+        </div>
+      `;
+    }
+
+    function renderEmpty(title, desc, icon = "fa-user-slash") {
+      const container = document.getElementById("listaInscritos");
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="fas ${icon}"></i>
+          <h3>${escapeHtml(title)}</h3>
+          <p>${escapeHtml(desc)}</p>
+        </div>
+      `;
+    }
+
+    // ============ AUTH ============
+    let usuarioLogado = null;
+
+    async function checkLogin() {
+      try {
+        const response = await api("/api/check-session");
+
+        if (!response.authenticated) {
+          window.location.href = "login.html";
+          return null;
+        }
+
+        usuarioLogado = response.user;
+
+        const userInfo = document.getElementById("userInfo");
+        if (userInfo) {
+          const ini = (usuarioLogado?.nome || "U")
+            .split(" ")
+            .filter(Boolean)
+            .map(n => n[0])
+            .join("")
+            .toUpperCase()
+            .slice(0, 2);
+
+          userInfo.innerHTML = `
+            <div class="user-avatar-mini">${escapeHtml(ini || "AD")}</div>
+            <span>${escapeHtml(usuarioLogado.nome || "Usuário")} (${escapeHtml(usuarioLogado.perfil || "")})</span>
+          `;
+        }
+
+        return usuarioLogado;
+      } catch (error) {
+        console.error("Erro ao verificar login:", error);
+        window.location.href = "login.html";
+        return null;
+      }
+    }
+
+    async function logout() {
+      if (!confirm("Tem certeza que deseja sair do painel administrativo?")) return;
+      try { await api("/api/logout", { method: "POST" }); } catch (_) {}
+      window.location.href = "login.html";
+    }
+
+    // ============ STATE ============
+    let page = 1;
+    let limit = 50;
+    let loading = false;
+
+    function getFilters() {
+      const q = (document.getElementById("q").value || "").trim();
+      const status = document.getElementById("status").value || "";
+      const sort = document.getElementById("sort").value || "criado_desc";
+      const limitSel = Number(document.getElementById("limit").value || 50) || 50;
+      return { q, status, sort, limitSel };
+    }
+
+    async function load() {
+      if (loading) return;
+      loading = true;
+
+      const container = document.getElementById("listaInscritos");
+      const totalInfo = document.getElementById("totalInfo");
+
+      const { q, status, sort, limitSel } = getFilters();
+      limit = limitSel;
+
+      const offset = (page - 1) * limit;
+      const params = new URLSearchParams();
+      params.set("limit", String(limit));
+      params.set("offset", String(offset));
+      if (q) params.set("q", q);
+      if (status) params.set("status", status);
+
+      // Loading state
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-spinner fa-spin"></i>
+          <h3>Carregando...</h3>
+          <p>Buscando inscritos no servidor.</p>
+        </div>
+      `;
+
+      try {
+        const data = await api(`/api/inscritos?${params.toString()}`);
+        const listRaw = Array.isArray(data?.inscritos) ? data.inscritos : [];
+
+        // Ordenação client-side (mantém compatibilidade mesmo se o backend não suportar)
+        const list = sortClient(listRaw, sort);
+
+        if (!list.length) {
+          const hasFilters = !!(q || status);
+          renderEmpty(
+            "Nenhum inscrito encontrado",
+            hasFilters ? "Tente ajustar os filtros ou limpar a busca." : "Ainda não há inscritos cadastrados.",
+            "fa-user-slash"
+          );
+          totalInfo.textContent = "0 registro(s)";
+        } else {
+          container.innerHTML = list.map(renderCard).join("");
+          const showingFrom = offset + 1;
+          const showingTo = offset + list.length;
+          totalInfo.textContent = `Mostrando ${showingFrom}-${showingTo} (${list.length} nesta página)`;
+        }
+
+        document.getElementById("page").textContent = String(page);
+
+        // Bind card actions
+        container.querySelectorAll("[data-action='copy-email']").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const email = btn.getAttribute("data-email") || "";
+            try {
+              await navigator.clipboard.writeText(email);
+              showMessage("E-mail copiado para a área de transferência.", "success");
+            } catch {
+              showMessage("Não foi possível copiar (permissão do navegador).", "error");
+            }
+          });
+        });
+
+      } catch (e) {
+        console.error(e);
+        renderEmpty("Erro ao carregar", "Verifique se você está logado e se o servidor está respondendo.", "fa-triangle-exclamation");
+        totalInfo.textContent = "—";
+      } finally {
+        loading = false;
+      }
+    }
+
+    // ============ BUSCA MELHORADA ============
+    let debounceTimer = null;
+    function debounceLoad(ms = 350) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        page = 1;
+        load();
+      }, ms);
+    }
+
+    function clearFilters() {
+      document.getElementById("q").value = "";
+      document.getElementById("status").value = "";
+      document.getElementById("sort").value = "criado_desc";
+      document.getElementById("limit").value = "50";
+      page = 1;
+      load();
+    }
+
+    // ============ INIT ============
+    document.addEventListener("DOMContentLoaded", async () => {
+      const user = await checkLogin();
+      if (!user) return;
+
+      // Listeners
+      document.getElementById("logoutBtn").addEventListener("click", logout);
+
+      document.getElementById("btnAtualizar").addEventListener("click", () => load());
+      document.getElementById("btnLimpar").addEventListener("click", clearFilters);
+
+      // Busca: debounce + Enter
+      document.getElementById("q").addEventListener("input", () => debounceLoad(350));
+      document.getElementById("q").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          page = 1;
+          load();
+        }
+      });
+
+      // Filtros: auto load
+      document.getElementById("status").addEventListener("change", () => { page = 1; load(); });
+      document.getElementById("sort").addEventListener("change", () => { page = 1; load(); });
+      document.getElementById("limit").addEventListener("change", () => { page = 1; load(); });
+
+      // Pager
+      document.getElementById("prev").addEventListener("click", () => {
+        if (page > 1) { page--; load(); }
+      });
+      document.getElementById("next").addEventListener("click", () => {
+        page++; load();
+      });
+
+      // Primeira carga
+      await load();
+      showMessage(`Bem-vindo(a), ${user.nome || "usuário"}!`, "success");
+    });
+  </script>
+</body>
+</html>
