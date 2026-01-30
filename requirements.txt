@@ -1,3 +1,5 @@
 flask
 gunicorn
 werkzeug
+flask-cors
+Pillow

@@ -791,10 +791,8 @@
                 <div class="top-bar-right">
                     <div class="social-icons">
                         <a href="https://web.facebook.com/profile.php?id=61587173375119&sk=about" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/oquartopodernews/" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     
-                        <a href="https://www.instagram.com/oquartopodernews/" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                       
-                    </div>
                 </div>
             </div>
         </div>
@@ -973,7 +971,7 @@
                     <ul class="footer-links">
                         <li><a href="sobre.html">Sobre Nós</a></li>
                         <li><a href="contato.html">Contato</a></li>
-                       
+                     
                         <li><a href="categorias.html">Categorias</a></li>
                     </ul>
                 </div>
@@ -1030,6 +1028,56 @@
         const Auth = {
             session: () => api("/api/check-session"),
         };
+        // ==================== MENU DESTAQUES (sem estático) ====================
+        async function renderMenuDestaques() {
+            const menu = document.querySelector('.menu-highlights');
+            if (!menu) return;
+
+            // garante um container
+            let list = menu.querySelector('#menuHighlightsList');
+            if (!list) {
+                // remove quaisquer itens estáticos existentes
+                menu.querySelectorAll('.highlight-item').forEach(el => el.remove());
+
+                list = document.createElement('div');
+                list.id = 'menuHighlightsList';
+                menu.appendChild(list);
+            } else {
+                list.innerHTML = '';
+            }
+
+            try {
+                const data = await Public.destaques();
+                const itens = Array.isArray(data) ? data : (data?.destaques || []);
+                if (!itens.length) return;
+
+                // pega no máximo 3 para o menu
+                itens.slice(0, 3).forEach(n => {
+                    const a = document.createElement('a');
+                    a.href = `noticia.html?id=${n.id}`;
+
+                    const wrap = document.createElement('div');
+                    wrap.className = 'highlight-item';
+
+                    const title = document.createElement('div');
+                    title.appendChild(a);
+                    a.textContent = n.titulo || 'Sem título';
+
+                    const dt = document.createElement('div');
+                    dt.className = 'highlight-date';
+                    const rawDate = n.data_formatada || n.data_publicacao;
+                    dt.textContent = rawDate ? new Date(rawDate).toLocaleDateString('pt-BR') : '';
+
+                    wrap.appendChild(title.firstChild); // link
+                    wrap.appendChild(dt);
+                    list.appendChild(wrap);
+                });
+            } catch (e) {
+                // se o servidor estiver offline, apenas não mostra nada (zerado)
+                // console.warn('Menu destaques indisponível:', e);
+            }
+        }
+
 
         // ==================== FUNÇÕES BÁSICAS ====================
         function updateDateTime() {
@@ -1169,3 +1217,4 @@
     </script>
 </body>
 </html>
+<script>renderMenuDestaques();</script>
