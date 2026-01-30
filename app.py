@@ -1742,7 +1742,7 @@ def inscrever_newsletter():
                 <body>
                     <div class="container">
                         <div class="header">
-                            <h1>📰 {EMAIL_CONFIG['company_name']}</h1>
+                            <h1> {EMAIL_CONFIG['company_name']}</h1>
                             <p>Sua fonte confiável de notícias</p>
                         </div>
                         
@@ -1757,8 +1757,8 @@ def inscrever_newsletter():
                             </div>
                             
                             <div class="highlight">
-                                <p><strong>📧 Email cadastrado:</strong> {email}</p>
-                                <p><strong>📅 Data da inscrição:</strong> {datetime.now().strftime("%d/%m/%Y às %H:%M")}</p>
+                                <p><strong> Email cadastrado:</strong> {email}</p>
+                                <p><strong> Data da inscrição:</strong> {datetime.now().strftime("%d/%m/%Y às %H:%M")}</p>
                             </div>
                             
                             <div class="message">
@@ -1767,15 +1767,14 @@ def inscrever_newsletter():
                             </div>
                             
                             <center>
-                                <a href="#" class="cta">Acessar Site</a>
+                                <a href="https://quartopodernews.onrender.com/" class="cta">Acessar Site</a>
                             </center>
                         </div>
                         
                         <div class="footer">
                             <div class="logo">Quarto Poder News</div>
                             <p>Sua fonte confiável de informação 24h</p>
-                            <p>📍 Rua das Notícias, 123 - Centro</p>
-                            <p>📞 (11) 99999-9999 | ✉️ contato@quartopodernews.com</p>
+                            <p> (61) 8160-0018 |  quartopodernews.sup1@gmail.com</p>
                             <p style="font-size: 12px; color: #999; margin-top: 20px;">
                                 Você está recebendo este email porque se inscreveu em nosso site.<br>
                                 Para cancelar a inscrição, responda este email com o assunto "Cancelar".
@@ -1795,8 +1794,8 @@ def inscrever_newsletter():
                 É com grande satisfação que confirmamos sua inscrição na nossa newsletter!
                 A partir de agora, você receberá as principais notícias e destaques diretamente no seu email.
                 
-                📧 Email cadastrado: {email}
-                📅 Data da inscrição: {datetime.now().strftime("%d/%m/%Y às %H:%M")}
+                 Email cadastrado: {email}
+                 Data da inscrição: {datetime.now().strftime("%d/%m/%Y às %H:%M")}
                 
                 Nossa equipe trabalha diariamente para trazer as notícias mais relevantes e atualizadas.
                 Fique atento à sua caixa de entrada!
@@ -1816,29 +1815,29 @@ def inscrever_newsletter():
                 )
                 
                 if email_enviado:
-                    print(f"✅ Email de confirmação enviado para: {email}")
+                    print(f" Email de confirmação enviado para: {email}")
                 else:
-                    print(f"⚠️ Falha ao enviar email de confirmação para: {email}")
+                    print(f" Falha ao enviar email de confirmação para: {email}")
                 
                 # Desconectar
                 email_service.disconnect()
             else:
-                print(f"⚠️ Não foi possível conectar ao servidor de email para: {email}")
+                print(f" Não foi possível conectar ao servidor de email para: {email}")
                 
         except Exception as email_error:
-            print(f"❌ Erro ao enviar email de confirmação: {email_error}")
+            print(f" Erro ao enviar email de confirmação: {email_error}")
             # Não falha a inscrição se o email falhar
         
         return jsonify({
             'success': True,
-            'message': '✅ Inscrição realizada com sucesso!' + (' Confirmação enviada por email.' if email_enviado else ''),
+            'message': ' Inscrição realizada com sucesso!' + (' Confirmação enviada por email.' if email_enviado else ''),
             'email': email,
             'nome': nome if nome else None,
             'email_enviado': email_enviado
         })
             
     except Exception as e:
-        print(f"❌ Erro na inscrição: {e}")
+        print(f" Erro na inscrição: {e}")
         import traceback
         traceback.print_exc()
         return jsonify({'success': False, 'error': 'Erro ao processar inscrição'}), 500
@@ -1848,7 +1847,7 @@ def confirmar_inscricao(codigo):
     """Confirma uma inscrição via código (manter para compatibilidade)"""
     success = db.confirmar_inscricao(codigo)
     if success:
-        return jsonify({'success': True, 'message': '✅ Inscrição confirmada com sucesso!'})
+        return jsonify({'success': True, 'message': ' Inscrição confirmada com sucesso!'})
     return jsonify({'success': False, 'error': 'Código de confirmação inválido'}), 400
 
 
