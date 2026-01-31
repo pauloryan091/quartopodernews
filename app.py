@@ -1276,7 +1276,8 @@ def get_noticia(noticia_id):
     if noticia.get('data_publicacao'):
         try:
             data_obj = datetime.fromisoformat(noticia['data_publicacao'].replace('Z', '+00:00'))
-            noticia['data_formatada'] = data_obj.strftime('%d/%m/Y às %H:%M')
+            noticia['data_formatada'] = data_obj.strftime('%d/%m/%Y às %H:%M')
+
         except:
             noticia['data_formatada'] = 'Hoje'
     
@@ -1294,7 +1295,8 @@ def get_noticia_by_slug(slug):
         if noticia.get('data_publicacao'):
             try:
                 data_obj = datetime.fromisoformat(noticia['data_publicacao'].replace('Z', '+00:00'))
-                noticia['data_formatada'] = data_obj.strftime('%d/%m/Y às %H:%M')
+                noticia['data_formatada'] = data_obj.strftime('%d/%m/%Y às %H:%M')
+
             except:
                 noticia['data_formatada'] = 'Hoje'
         
@@ -1515,7 +1517,8 @@ def public_noticias():
         if noticia.get('data_publicacao'):
             try:
                 data_obj = datetime.fromisoformat(noticia['data_publicacao'].replace('Z', '+00:00'))
-                noticia['data_formatada'] = data_obj.strftime('%d/%m/Y às %H:%M')
+                noticia['data_formatada'] = data_obj.strftime('%d/%m/%Y às %H:%M')
+
                 noticia['data_relativa'] = data_obj.strftime('%d %b')
             except:
                 noticia['data_formatada'] = 'Hoje'

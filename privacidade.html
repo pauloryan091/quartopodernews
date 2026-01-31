@@ -1,0 +1,549 @@
+<!-- =========================================================
+     privacidade.html — Quarto Poder News (padrão de design do site)
+     ========================================================= -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Política de Privacidade - Quarto Poder News</title>
+  <meta name="description" content="Política de Privacidade do portal Quarto Poder News" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/4poder.png" type="image/png">
+<link rel="apple-touch-icon" href="/4poder.png">
+
+  <style>
+    :root{
+      --primary:#0A0A0A;
+      --secondary:#D50000;
+      --accent:#003366;
+      --light:#FFFFFF;
+      --gray-light:#F8F9FA;
+      --gray:#6C757D;
+      --gray-dark:#212529;
+      --transition:all .3s ease;
+      --border:1px solid #E9ECEF;
+      --shadow:0 5px 15px rgba(0,0,0,.05);
+      --shadow-hover:0 10px 25px rgba(0,0,0,.1);
+      --container-padding:clamp(15px,4vw,30px);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{font-size:16px;scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;background:var(--light);color:var(--gray-dark);line-height:1.6;
+      overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:700;line-height:1.2}
+    a{text-decoration:none;color:inherit;transition:var(--transition)}
+    button{cursor:pointer;border:none;background:none;font-family:inherit}
+    .container{max-width:1200px;margin:0 auto;padding:0 var(--container-padding);width:100%}
+
+    .top-bar{background:#111;color:#fff;padding:10px 0;font-size:.85rem}
+    .top-bar-content{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:38px}
+    .top-bar .date{font-weight:500;text-transform:lowercase}
+    .social-icons{display:flex;gap:14px;align-items:center}
+    .social-icons a{color:#fff;opacity:.85;transition:opacity .2s ease,transform .2s ease;display:inline-flex}
+    .social-icons a:hover{opacity:1;transform:translateY(-1px)}
+    @media(max-width:600px){
+      .top-bar-content{flex-direction:column;gap:6px;text-align:center;padding:4px 0}
+      .social-icons{justify-content:center}
+    }
+
+    .main-header{
+      background:var(--light);padding:15px 0;border-bottom:var(--border);
+      position:sticky;top:0;z-index:1000;box-shadow:var(--shadow);
+    }
+    .header-content{display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .logo-icon{
+      width:40px;height:40px;background:var(--primary);color:var(--light);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Playfair Display',serif;font-size:24px;font-weight:900;border-radius:4px;flex-shrink:0
+    }
+    .logo-icon .number{color:var(--secondary)}
+    .logo-text h1{font-size:clamp(18px,4vw,28px);color:var(--primary);line-height:1;margin:0}
+    .logo-text .tagline{font-size:.65rem;color:var(--secondary);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:2px}
+
+    .hamburger-menu{position:relative;z-index:1000}
+    .hamburger-btn{display:flex;flex-direction:column;justify-content:space-between;width:30px;height:21px;padding:0;position:relative;z-index:1002}
+    .hamburger-btn span{display:block;width:100%;height:3px;background:var(--primary);transition:var(--transition);border-radius:2px}
+    .hamburger-btn.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}
+    .hamburger-btn.active span:nth-child(2){opacity:0}
+    .hamburger-btn.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+
+    .menu-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none;z-index:999;opacity:0;transition:opacity .3s ease;backdrop-filter:blur(2px)}
+    .menu-overlay.active{display:block;opacity:1}
+    .menu-sidebar{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100%;background:var(--light);box-shadow:-5px 0 25px rgba(0,0,0,.1);overflow-y:auto;transition:right .3s cubic-bezier(.4,0,.2,1);z-index:1000;padding:20px}
+    .menu-sidebar.active{right:0}
+    .menu-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:var(--border);margin-bottom:20px}
+    .menu-logo{display:flex;align-items:center;gap:10px}
+    .menu-logo-icon{width:35px;height:35px;background:var(--primary);color:var(--light);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;font-weight:900;border-radius:4px}
+    .menu-logo-text h3{font-size:16px;color:var(--primary);margin:0;line-height:1.2}
+    .menu-logo-text .sub{font-size:10px;color:var(--secondary);text-transform:uppercase;font-weight:700}
+    .close-menu-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:20px;border-radius:50%;transition:var(--transition)}
+    .close-menu-btn:hover{background:var(--gray-light);color:var(--primary)}
+    .menu-categories{list-style:none;margin-bottom:30px}
+    .menu-categories a{display:block;padding:12px 15px;color:var(--gray-dark);font-size:14px;font-weight:600;border-radius:6px;position:relative}
+    .menu-categories a:hover{background:var(--gray-light);color:var(--secondary);padding-left:20px}
+    .menu-categories a.active{background:var(--gray-light);color:var(--secondary);font-weight:700}
+    .menu-categories a.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--secondary);border-radius:0 2px 2px 0}
+    .menu-highlights{margin-top:30px;padding-top:20px;border-top:var(--border)}
+    .menu-highlights h4{font-size:16px;color:var(--primary);margin-bottom:15px}
+    .highlight-item{margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid var(--gray-light)}
+    .highlight-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+    .highlight-item a{color:var(--gray-dark);font-size:14px;line-height:1.4;display:block}
+    .highlight-item a:hover{color:var(--secondary)}
+    .highlight-date{font-size:12px;color:var(--gray);margin-top:5px}
+
+    .main-content{padding:34px 0;min-height:60vh}
+    .page-hero{
+      background:var(--light);
+      border:var(--border);
+      border-radius:12px;
+      padding:clamp(18px,3vw,28px);
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+    .page-title{font-size:clamp(1.6rem,4.5vw,2.4rem);color:var(--primary);margin-bottom:10px}
+    .page-subtitle{color:var(--gray);font-size:1rem;max-width:900px}
+    .content-card{
+      background:var(--light);
+      border:var(--border);
+      border-radius:12px;
+      padding:clamp(18px,3vw,28px);
+      box-shadow:var(--shadow);
+    }
+    .content-card h2{
+      font-size:clamp(1.2rem,3.2vw,1.55rem);
+      color:var(--primary);
+      margin:28px 0 12px;
+      padding-bottom:10px;
+      border-bottom:3px solid var(--accent);
+    }
+    .content-card h2:first-of-type{margin-top:0}
+    .content-card p{margin-bottom:14px;color:var(--gray-dark);line-height:1.85}
+    .content-card ul{margin:10px 0 18px 20px}
+    .content-card li{margin-bottom:10px}
+    .callout{
+      margin:18px 0;padding:16px 18px;border-left:4px solid var(--secondary);
+      background:var(--gray-light);border-radius:10px;color:var(--gray-dark);
+    }
+    .grid-2{
+      display:grid;grid-template-columns:1fr;gap:16px;margin-top:10px
+    }
+    .mini-card{
+      background:var(--gray-light);
+      border:1px solid #e9ecef;
+      border-radius:12px;
+      padding:16px 16px;
+    }
+    .mini-card h3{
+      font-family:'Inter',sans-serif;
+      font-weight:800;
+      font-size:1rem;
+      margin-bottom:8px;
+      color:var(--primary);
+      display:flex;align-items:center;gap:10px
+    }
+    .mini-card h3 i{color:var(--secondary)}
+    .mini-card p{margin:0;color:var(--gray-dark);line-height:1.7}
+    @media(min-width:900px){ .grid-2{grid-template-columns:repeat(2,1fr)} }
+
+    footer{background:var(--primary);color:var(--light);padding:44px 0 22px;margin-top:46px;position:relative}
+    footer::before{content:"";position:absolute;left:0;top:0;width:100%;height:5px;background:var(--secondary)}
+    .footer-content{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:28px}
+    .footer-logo .logo-icon{width:48px;height:48px;margin-bottom:14px}
+    .footer-logo h3{font-size:1.45rem;margin-bottom:10px}
+    .footer-logo p{color:var(--gray);font-size:.92rem}
+    .footer-section h4{font-size:1.1rem;margin-bottom:14px;position:relative;padding-bottom:10px}
+    .footer-section h4::after{content:"";position:absolute;left:0;bottom:0;width:42px;height:3px;background:var(--secondary)}
+    .footer-links{list-style:none}
+    .footer-links li{margin-bottom:10px}
+    .footer-links a{color:var(--gray);display:inline-block}
+    .footer-links a:hover{color:var(--secondary);transform:translateX(6px)}
+    .newsletter-form{margin-top:12px}
+    .newsletter-form input{
+      width:100%;padding:12px 14px;border-radius:8px;background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.25);color:var(--light);font-size:.95rem;transition:var(--transition)
+    }
+    .newsletter-form input:focus{outline:none;border-color:var(--secondary);background:rgba(255,255,255,.14)}
+    .newsletter-form button{
+      width:100%;margin-top:10px;padding:12px;border-radius:8px;border:none;background:var(--secondary);
+      color:var(--light);font-weight:900;transition:var(--transition)
+    }
+    .newsletter-form button:hover{background:#b30000;transform:translateY(-2px)}
+    .copyright{
+      border-top:1px solid rgba(255,255,255,.1);
+      padding-top:18px;color:var(--gray);font-size:.9rem;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
+    }
+    .footer-nav{display:flex;gap:16px;flex-wrap:wrap}
+    .footer-nav a{color:var(--gray);font-size:.85rem}
+    .footer-nav a:hover{color:var(--secondary)}
+    .newsletter-message{font-size:.85rem;font-weight:600;text-align:center;padding:8px 12px;border-radius:6px;margin-top:10px;display:none}
+    .newsletter-message.success{background:rgba(25,135,84,.1);color:#198754;border:1px solid rgba(25,135,84,.2)}
+    .newsletter-message.error{background:rgba(220,53,69,.1);color:#dc3545;border:1px solid rgba(220,53,69,.2)}
+    @media(min-width:768px){ .footer-content{grid-template-columns:repeat(2,1fr)} }
+    @media(min-width:1024px){ .footer-content{grid-template-columns:repeat(4,1fr)} }
+    @media(max-width:767px){ .copyright{flex-direction:column;text-align:center;gap:15px} }
+
+    :focus{outline:2px solid var(--secondary);outline-offset:2px}
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-content">
+        <div class="top-bar-left">
+          <span class="date" id="currentDate"></span>
+        </div>
+        <div class="top-bar-right">
+          <div class="social-icons">
+            <a href="https://web.facebook.com/profile.php?id=61587173375119&sk=about" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/oquartopodernews/" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="container header-content">
+      <a href="index.html" class="logo" aria-label="Quarto Poder News - Página inicial">
+        <div class="logo-icon"><span class="number">4</span></div>
+        <div class="logo-text">
+          <h1>QUARTO PODER NEWS</h1>
+          <div class="tagline">O JORNAL QUE FAZ A DIFERENÇA</div>
+        </div>
+      </a>
+
+      <div class="hamburger-menu">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Overlay/Menu -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="menu-sidebar" id="menuSidebar" aria-label="Menu lateral">
+    <div class="menu-header">
+      <div class="menu-logo">
+        <div class="menu-logo-icon"><span class="number">4</span></div>
+        <div class="menu-logo-text">
+          <h3>QUARTO PODER NEWS</h3>
+          <div class="sub">Menu Principal</div>
+        </div>
+      </div>
+      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Fechar menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <ul class="menu-categories">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categorias.html">Categorias</a></li>
+      <li><a href="todas-noticias.html">Todas as Notícias</a></li>
+      <li><a href="sobre.html">Sobre Nós</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="termos.html">Termos de Uso</a></li>
+      <li><a href="privacidade.html" class="active">Política de Privacidade</a></li>
+    </ul>
+
+    <div class="menu-highlights">
+      <h4>Destaques</h4>
+      <div id="menuHighlightsList"></div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <main class="main-content">
+    <div class="container">
+      <section class="page-hero" aria-label="Cabeçalho Política de Privacidade">
+        <h1 class="page-title">Política de Privacidade</h1>
+        <p class="page-subtitle">
+          Esta Política explica como o <strong>Quarto Poder News</strong> coleta, usa e protege informações relacionadas ao uso do portal,
+          incluindo inscrições em newsletter e comunicações com a redação, em conformidade com a <strong>LGPD (Lei 13.709/2018)</strong>.
+        </p>
+        <p class="page-subtitle" style="margin-top:10px;">
+          Se você quiser, também pode consultar os <a href="termos.html" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">Termos de Uso</a>.
+        </p>
+        <p class="page-subtitle muted" style="margin-top:12px;">Última atualização: <span id="lastUpdate">31/01/2026</span></p>
+      </section>
+
+      <article class="content-card" aria-label="Conteúdo da Política de Privacidade">
+        <h2>1. Quais dados podemos coletar</h2>
+        <div class="grid-2">
+          <div class="mini-card">
+            <h3><i class="fas fa-envelope"></i> Newsletter e contato</h3>
+            <p>
+              Quando você se inscreve na newsletter ou entra em contato, podemos coletar seu e-mail e o conteúdo da mensagem.
+              Esses dados são usados apenas para envio das comunicações solicitadas e atendimento.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h3><i class="fas fa-chart-line"></i> Dados de navegação</h3>
+            <p>
+              Podemos coletar dados técnicos básicos (ex.: endereço IP, tipo de navegador, páginas acessadas, data/hora e métricas de uso)
+              para segurança, prevenção a fraudes e melhoria da experiência.
+            </p>
+          </div>
+        </div>
+
+        <h2>2. Para que usamos os dados</h2>
+        <ul>
+          <li><strong>Enviar newsletter</strong> e comunicações editoriais solicitadas.</li>
+          <li><strong>Responder contatos</strong> e solicitações enviadas pelo usuário.</li>
+          <li><strong>Melhorar o portal</strong>: entender como o conteúdo é consumido e aprimorar navegação e desempenho.</li>
+          <li><strong>Segurança</strong>: prevenir abusos, ataques e acessos indevidos.</li>
+        </ul>
+
+        <h2>3. Base legal (LGPD)</h2>
+        <p>
+          O tratamento de dados pode ocorrer com base em: (i) <strong>consentimento</strong> (ex.: inscrição na newsletter),
+          (ii) <strong>cumprimento de obrigação legal/regulatória</strong>, (iii) <strong>legítimo interesse</strong> (ex.: segurança e melhoria do serviço),
+          sempre respeitando os direitos e liberdades do titular.
+        </p>
+
+        <h2>4. Compartilhamento de dados</h2>
+        <p>
+          Não vendemos seus dados. Podemos compartilhar informações apenas quando necessário:
+        </p>
+        <ul>
+          <li>Com <strong>provedores de tecnologia</strong> (ex.: envio de e-mail/newsletter, hospedagem), estritamente para operar o serviço.</li>
+          <li>Para <strong>cumprimento legal</strong> ou ordem de autoridade competente.</li>
+          <li>Para <strong>proteger direitos</strong> do portal, usuários e terceiros (ex.: prevenção a fraudes).</li>
+        </ul>
+
+        <h2>5. Cookies e tecnologias semelhantes</h2>
+        <p>
+          O portal pode usar cookies para lembrar preferências, medir desempenho e melhorar a experiência.
+          Dependendo da sua implementação, você pode gerenciar cookies nas configurações do seu navegador.
+        </p>
+        <div class="callout">
+          <strong>Dica:</strong> desabilitar cookies pode afetar algumas funcionalidades do site.
+        </div>
+
+        <h2>6. Retenção e segurança</h2>
+        <p>
+          Mantemos dados apenas pelo tempo necessário para cumprir as finalidades descritas nesta Política e obrigações legais.
+          Adotamos medidas técnicas e organizacionais razoáveis para proteger informações contra acessos não autorizados, perda e uso indevido.
+        </p>
+
+        <h2>7. Direitos do titular (LGPD)</h2>
+        <p>
+          Você pode solicitar: confirmação de tratamento, acesso, correção, anonimização, portabilidade, eliminação (quando aplicável),
+          informação sobre compartilhamento e revogação do consentimento.
+        </p>
+        <p>
+          Para exercer seus direitos, entre em contato pela página
+          <a href="contato.html" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">Contato</a>.
+        </p>
+
+        <h2>8. Links externos</h2>
+        <p>
+          O portal pode conter links para sites de terceiros. Não nos responsabilizamos pelas práticas de privacidade desses sites.
+          Recomendamos que você leia as políticas de privacidade de cada serviço externo.
+        </p>
+
+        <h2>9. Alterações desta Política</h2>
+        <p>
+          Podemos atualizar esta Política periodicamente. A versão vigente estará sempre publicada nesta página.
+          O uso continuado do portal indica ciência das atualizações.
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <div class="logo-icon"><span class="number">4</span></div>
+          <h3>QUARTO PODER NEWS</h3>
+          <p>Jornalismo independente com compromisso com a verdade, integridade e impacto.</p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Editorias</h4>
+          <ul class="footer-links">
+            <li><a href="todas-noticias.html?categoria=Política">Política</a></li>
+            <li><a href="todas-noticias.html?categoria=Economia">Economia</a></li>
+            <li><a href="todas-noticias.html?categoria=Esportes">Esportes</a></li>
+            <li><a href="todas-noticias.html?categoria=Cultura">Cultura</a></li>
+            <li><a href="todas-noticias.html?categoria=Tecnologia">Tecnologia</a></li>
+            <li><a href="todas-noticias.html?categoria=Saúde">Saúde</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Institucional</h4>
+          <ul class="footer-links">
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="termos.html">Termos de Uso</a></li>
+            <li><a href="privacidade.html">Política de Privacidade</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Inscreva-se</h4>
+          <p>As principais notícias do dia, direto da redação do Quarto Poder News.</p>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required />
+            <button type="submit">INSCREVER</button>
+          </form>
+          <div class="newsletter-message" id="newsletterMessage"></div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2024-2026 Quarto Poder News. Todos os direitos reservados.</p>
+        <div class="footer-nav">
+          <a href="termos.html">Termos de Uso</a>
+          <a href="privacidade.html">Política de Privacidade</a>
+          <a href="mapa.html">Mapa do Site</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    async function api(path, { method="GET", body, headers={}, credentials="same-origin" } = {}) {
+      const res = await fetch(path, {
+        method, credentials,
+        headers: { "Content-Type": "application/json", ...headers },
+        body: body ? JSON.stringify(body) : undefined,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || `Erro HTTP ${res.status}`);
+      return data;
+    }
+
+    const Public = { destaques: () => api("/api/public/destaques") };
+
+    async function renderMenuDestaques() {
+      const list = document.getElementById("menuHighlightsList");
+      if (!list) return;
+      list.innerHTML = "";
+
+      try{
+        const data = await Public.destaques();
+        const itens = Array.isArray(data) ? data : (data?.destaques || []);
+        if (!itens.length) return;
+
+        itens.slice(0,3).forEach(n => {
+          const wrap = document.createElement("div");
+          wrap.className = "highlight-item";
+
+          const a = document.createElement("a");
+          a.href = n.slug ? `noticia.html?slug=${encodeURIComponent(n.slug)}` : `noticia.html?id=${n.id}`;
+          a.textContent = n.titulo || "Sem título";
+
+          const dt = document.createElement("div");
+          dt.className = "highlight-date";
+          const raw = n.data_formatada || n.data_publicacao || "";
+          dt.textContent = raw.includes("/") ? raw : (raw ? new Date(raw).toLocaleDateString("pt-BR") : "");
+
+          wrap.appendChild(a);
+          wrap.appendChild(dt);
+          list.appendChild(wrap);
+        });
+      }catch(e){ /* silencioso */ }
+    }
+
+    function updateDateTime() {
+      const now = new Date();
+      const dateEl = document.getElementById("currentDate");
+      if (!dateEl) return;
+      dateEl.textContent = now.toLocaleDateString("pt-BR", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+    }
+
+    function initHamburgerMenu(){
+      const hamburgerBtn = document.getElementById("hamburgerBtn");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+      const menuOverlay = document.getElementById("menuOverlay");
+      const menuSidebar = document.getElementById("menuSidebar");
+      if (!hamburgerBtn || !closeMenuBtn || !menuOverlay || !menuSidebar) return;
+
+      hamburgerBtn.addEventListener("click", () => {
+        hamburgerBtn.classList.add("active");
+        menuOverlay.classList.add("active");
+        menuSidebar.classList.add("active");
+        document.body.style.overflow = "hidden";
+      });
+
+      function closeMenu(){
+        hamburgerBtn.classList.remove("active");
+        menuOverlay.classList.remove("active");
+        menuSidebar.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      closeMenuBtn.addEventListener("click", closeMenu);
+      menuOverlay.addEventListener("click", closeMenu);
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+
+      document.querySelectorAll(".menu-categories a, .menu-highlights a").forEach(link => {
+        link.addEventListener("click", () => setTimeout(closeMenu, 150));
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 768 && menuSidebar.classList.contains("active")) closeMenu();
+      });
+    }
+
+    function initNewsletter(){
+      const form = document.getElementById("newsletterForm");
+      const message = document.getElementById("newsletterMessage");
+      if (!form || !message) return;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = (document.getElementById("newsletterEmail")?.value || "").trim();
+
+        const show = (text, type) => {
+          message.textContent = text;
+          message.className = `newsletter-message ${type || ""}`;
+          message.style.display = "block";
+          if (type === "success") setTimeout(() => (message.style.display = "none"), 5000);
+        };
+
+        if (!email || !email.includes("@")) return show("Por favor, insira um e-mail válido.", "error");
+
+        show("Processando inscrição...", "");
+        try{
+          const res = await api("/api/newsletter/inscrever", { method:"POST", body:{ email } });
+          if (res?.success) {
+            show(res.message || "✅ Inscrição realizada! Verifique seu e-mail para confirmar.", "success");
+            form.reset();
+          } else {
+            show(res?.error || "Erro ao processar inscrição.", "error");
+          }
+        }catch(err){
+          show("Erro ao enviar. Verifique se o servidor está rodando.", "error");
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      updateDateTime();
+      setInterval(updateDateTime, 60000);
+      initHamburgerMenu();
+      initNewsletter();
+      await renderMenuDestaques();
+    });
+  </script>
+</body>
+</html>

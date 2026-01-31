@@ -7,6 +7,9 @@
     <meta name="description" content="Acompanhe todas as notícias do Quarto Poder News em um só lugar">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/4poder.png" type="image/png">
+<link rel="apple-touch-icon" href="/4poder.png">
+
     <style>
         /* Reset e variáveis - PADRÃO CATEGORIAS.HTML */
         :root {
@@ -1544,6 +1547,7 @@
     </footer>
 
     <script>
+        
         // ==================== API HELPER (mesma origem) ====================
         async function api(path, { method = "GET", body, headers = {}, credentials = "same-origin" } = {}) {
             const res = await fetch(path, {
